@@ -34,10 +34,6 @@ node_modules
 
 ## Directory-based project format:
  .idea/
- .idea/workspace.xml
- .idea/vcs.xml
- .idea/jsLibraryMappings.xml
- .idea/mean-stack-registration-login-example-master.iml
 
 ## File-based project format:
 *.ipr
