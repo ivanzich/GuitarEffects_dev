@@ -2,6 +2,7 @@
 var express = require('express');
 var router = express.Router();
 var userService = require('services/user.service');
+var log = require('../log.controller');
 
 // routes
 router.post('/authenticate', authenticateUser);
@@ -17,6 +18,7 @@ function authenticateUser(req, res) {
         .then(function (token) {
             if (token) {
                 // authentication successful
+                log.info(req.body.username +' connected');
                 res.send({ token: token });
             } else {
                 // authentication failed
@@ -31,6 +33,7 @@ function authenticateUser(req, res) {
 function registerUser(req, res) {
     userService.create(req.body)
         .then(function () {
+            log.info(req.body.username +' has created account');
             res.sendStatus(200);
         })
         .catch(function (err) {
@@ -61,6 +64,7 @@ function updateUser(req, res) {
 
     userService.update(userId, req.body)
         .then(function () {
+            log.info(req.user.username +'\'s account has been updated');
             res.sendStatus(200);
         })
         .catch(function (err) {
@@ -77,6 +81,7 @@ function deleteUser(req, res) {
 
     userService.delete(userId)
         .then(function () {
+            log.info(req.user.username +'\'s account has been deleted');
             res.sendStatus(200);
         })
         .catch(function (err) {
