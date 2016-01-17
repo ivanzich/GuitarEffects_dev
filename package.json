@@ -1,0 +1,27 @@
+﻿{
+    "name": "GuitarEffects",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "start": "node ./server"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:frouyer193/guitarEffects.git"
+    },
+    "dependencies": {
+        "express": "^4.13.0",
+        "body-parser": "^1.13.2",
+        "express-session": "^1.11.3",
+        "request": "^2.58.0",
+        "ejs": "^2.3.3",
+        "bcryptjs": "^2.1.0",
+        "express-jwt": "^3.0.1",
+        "jsonwebtoken": "^5.0.2",
+        "lodash": "^3.10.0",
+        "mongodb": "^2.0.36",
+        "monk": "^1.0.1",
+        "q": "^1.4.1",
+        "rootpath": "^0.1.2"
+    }
+}
