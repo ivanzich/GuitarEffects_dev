@@ -5,7 +5,7 @@
 var config = require('config.json');
 var express = require('express');
 var router = express.Router();
-var userService = require('services/user.service');
+var effectService = require('services/effect.service');
 var log = require('../log.controller');
 
 // routes
@@ -18,7 +18,7 @@ router.delete('/:_id', deleteEffect);
 module.exports = router;
 
 function registerEffect(req, res) {
-    userService.create(req.body)
+    effectService.create(req.body)
         .then(function () {
             log.info(req.body.username +' has created account');
             res.sendStatus(200);
@@ -29,10 +29,10 @@ function registerEffect(req, res) {
 }
 
 function getEffect(req, res) {
-    userService.getById(req.user.sub)
-        .then(function (user) {
-            if (user) {
-                res.send(user);
+    effectService.getById(req.effect.sub)
+        .then(function (effect) {
+            if (effect) {
+                res.send(effect);
             } else {
                 res.sendStatus(404);
             }
@@ -43,7 +43,7 @@ function getEffect(req, res) {
 }
 
 function getListEffects(req, res) {
-    userService.getById(req.user.sub)
+    effectService.getList(req.user.sub)
         .then(function (user) {
             if (user) {
                 res.send(user);
@@ -63,7 +63,7 @@ function updateEffect(req, res) {
         return res.status(401).send('You can only update your own account');
     }
 
-    userService.update(userId, req.body)
+    effectService.update(userId, req.body)
         .then(function () {
             log.info(req.user.username +'\'s account has been updated');
             res.sendStatus(200);
@@ -80,7 +80,7 @@ function deleteEffect(req, res) {
         return res.status(401).send('You can only delete your own account');
     }
 
-    userService.delete(userId)
+    effectService.delete(userId)
         .then(function () {
             log.info(req.user.username +'\'s account has been deleted');
             res.sendStatus(200);

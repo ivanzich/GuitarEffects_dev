@@ -21,28 +21,27 @@ service.create = create;
 
 module.exports = service;
 
-function authenticate(username, password) {
-    var deferred = Q.defer();
-
-    usersDb.findOne({ username: username }, function (err, user) {
-        if (err) deferred.reject(err);
-
-        if (user && bcrypt.compareSync(password, user.hash)) {
-            // authentication successful
-            deferred.resolve(jwt.sign({ sub: user._id }, config.secret));
-        } else {
-            // authentication failed
-            deferred.resolve();
-        }
-    });
-
-    return deferred.promise;
-}
-
 function getById(_id) {
     var deferred = Q.defer();
 
     effectsDb.findById(_id, function (err, effetc) {
+        if (err) deferred.reject(err);
+
+        if (effetc) {
+            // return effect
+            deferred.resolve(effetc);
+        } else {
+            // effect not found
+            deferred.resolve();
+        }
+    });
+    return deferred.promise;
+}
+
+function getList() {
+    var deferred = Q.defer();
+
+    effectsDb.findById(null, function (err, effetc) {
         if (err) deferred.reject(err);
 
         if (effetc) {
