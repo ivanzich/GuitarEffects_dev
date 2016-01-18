@@ -16,14 +16,21 @@
                 templateUrl: 'home/index.html',
                 controller: 'Home.IndexController',
                 controllerAs: 'vm',
-                data: { activeTab: 'home' }
+                data: {activeTab: 'home'}
             })
             .state('account', {
                 url: '/account',
                 templateUrl: 'account/index.html',
                 controller: 'Account.IndexController',
                 controllerAs: 'vm',
-                data: { activeTab: 'account' }
+                data: {activeTab: 'account'}
+            })
+            .state('pedals', {
+                url: '/pedals',
+                templateUrl: 'pedals/pedals.html',
+                controller: 'Pedals.IndexController',
+                controllerAs: 'vm',
+                data: {activeTab: 'pedals'}
             });
     }
 

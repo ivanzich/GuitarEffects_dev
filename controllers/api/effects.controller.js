@@ -60,7 +60,7 @@ function updateEffect(req, res) {
     var userId = req.user.sub;
     if (req.params._id !== userId) {
         // can only update own account
-        return res.status(401).send('You can only update your own account');
+        return res.status(401).send('You can only update your own effect');
     }
 
     effectService.update(userId, req.body)
@@ -77,12 +77,12 @@ function deleteEffect(req, res) {
     var userId = req.user.sub;
     if (req.params._id !== userId) {
         // can only delete own account
-        return res.status(401).send('You can only delete your own account');
+        return res.status(401).send('You can only delete your own effect');
     }
 
     effectService.delete(userId)
         .then(function () {
-            log.info(req.user.username +'\'s account has been deleted');
+            log.info(req.user.username +'\'s effect has been deleted');
             res.sendStatus(200);
         })
         .catch(function (err) {
