@@ -16,6 +16,7 @@ var service = {};
 
 service.getById = getById;
 service.create = create;
+service.getListEffects = getListEffects;
 //service.update = update;
 //service.delete = _delete;
 
@@ -38,7 +39,7 @@ function getById(_id) {
     return deferred.promise;
 }
 
-function getList() {
+function getListEffects() {
     var deferred = Q.defer();
 
     effectsDb.findById(null, function (err, effetc) {

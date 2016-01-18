@@ -2,7 +2,7 @@
 var express = require('express');
 var router = express.Router();
 var userService = require('services/user.service');
-var log = require('../log.controller');
+var log = require('../logs/accessLog.controller.js');
 
 // routes
 router.post('/authenticate', authenticateUser);

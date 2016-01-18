@@ -6,7 +6,7 @@ var config = require('config.json');
 var express = require('express');
 var router = express.Router();
 var effectService = require('services/effect.service');
-var log = require('../log.controller');
+var log = require('../logs/effectLog.controller.js');
 
 // routes
 router.post('/register', registerEffect);
@@ -20,7 +20,7 @@ module.exports = router;
 function registerEffect(req, res) {
     effectService.create(req.body)
         .then(function () {
-            log.info(req.body.username +' has created account');
+            log.info(req.body.id +' has been created');
             res.sendStatus(200);
         })
         .catch(function (err) {
@@ -43,10 +43,10 @@ function getEffect(req, res) {
 }
 
 function getListEffects(req, res) {
-    effectService.getList(req.user.sub)
-        .then(function (user) {
-            if (user) {
-                res.send(user);
+    effectService.getListEffects()
+        .then(function (effect) {
+            if (effect) {
+                res.send(effect);
             } else {
                 res.sendStatus(404);
             }
