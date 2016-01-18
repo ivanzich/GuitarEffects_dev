@@ -42,12 +42,12 @@ function getById(_id) {
 function getListEffects() {
     var deferred = Q.defer();
 
-    effectsDb.findById(null, function (err, effetc) {
+    effectsDb.findById(null, function (err, effect) {
         if (err) deferred.reject(err);
 
-        if (effetc) {
+        if (effect) {
             // return effect
-            deferred.resolve(effetc);
+            deferred.resolve(effect);
         } else {
             // effect not found
             deferred.resolve();
