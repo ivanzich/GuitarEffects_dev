@@ -5,3 +5,25 @@
 .flash-message {
     margin-top: 20px;
 }
+
+/*Passage sur l'image' */
+.img:hover{
+    background-color: blueviolet;
+}
+.close:hover{
+
+}
+.con{
+    background-color:white;
+}
+#log{
+    color: white;
+    background-color:white;
+    width:500px;
+    height:100px;
+
+}
+.plumb svg circle{
+    stroke:black;
+    fill:yellow
+}
