@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app ="app">
+    <head>
+        <title>Audio</title>
+        <link type="text/css" rel="stylesheet" href="audio.css" />
+        <script src="angular.min.js"></script>
+        <script src="jquery-2.1.4.js"></script>
+        <script src="dragMe.js"></script>
+    </head>
+    <body ng-controller="ctrl">
+        <div class="principale">
+            </br> </br> </br> 
+            <div id="ajout" class="selectComposant">
+                <select id ="ajoutElement" class="slectionComposant" ng-options="element.name for element in elements" ng-model="musique.element"></select>
+            </div>
+            <br>
+            <div id="generer" class="addComposant" ng-repeat="composant in composants">
+                <br>
+                <div id="{{composant.id}}" class="composant" >
+                    <img class="delete" ng-src="{{composant.sup}}" width="20" height="20" ng-click="delete($index)"></img> 
+                    <label class="label">{{composant.label}}</label>
+                    <br><br>
+                    <img class="img" ng-src="{{composant.src}}" width="50" height="50"></img>   
+                </div>
+            </div>
+        </div>
+    </body>
+     <script src="audio.js"></script>
+ </html>
+

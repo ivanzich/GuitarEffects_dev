@@ -1,0 +1,34 @@
+ var app = angular.module('app', []);
+ app.controller('ctrl', ["$scope", "$rootScope", function($scope, $rootScope) 
+    {
+        var scope = $scope;
+        scope.elements = [{'name': 'Ajout de lecteur'},{'name': 'Lobo'}];
+        scope.composants =[];
+        var ajout = $('#ajout');
+        var id=1;
+        ajout.on( 
+            {
+                'change': function(event) 
+                    {
+                        if ( $("#ajoutElement option:selected").text()==='Ajout de lecteur')
+                        {
+                            scope.composants.push({'label':'Lecteur audio','src':'IMAGES/audio/img.png','id':'composant'+id,'sup':'IMAGES/audio/sup.png'});            
+                            scope.$apply();
+                            var atr= $('#composant'+id).attr("id");
+                            $('#'+atr).dragMe();
+                            id =id+1;
+                        }
+                        event.preventDefault();
+                     }   
+                }
+            );
+        
+        //Fonction suppresion
+        scope.delete =function(index)
+        {
+            var atr= $scope.composants[index].id;
+            $('#'+atr).remove();
+            //$scope.composants.splice(index, 1);
+        };
+    }]);
+ 

@@ -1,0 +1,20 @@
+<html>
+<head>
+	<script src="jquery-2.1.4.js"></script>
+ 	<script src="map.js" type="text/javascript"></script>
+
+    	<script src="rechercheAutomatique.js"></script>
+<script type="text/javascript">
+$(function (){
+
+    $("#fulladdresseField").googleMapAuocompleteAddress() ;
+});
+
+</script>
+
+</head>
+<body>
+
+ <input id="fulladdresseField" type="text" size="50">
+</body>
+</html>
