@@ -66,6 +66,6 @@ nb-configuration.xml
 .nb-gradle/
 
 
-bower_components
+app/bower_components
 
 
