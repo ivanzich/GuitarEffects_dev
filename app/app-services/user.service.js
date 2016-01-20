@@ -15,8 +15,14 @@
         service.Create = Create;
         service.Update = Update;
         service.Delete = Delete;
+        service.GetUserList = GetUserList;
 
         return service;
+
+
+        function GetUserList() {
+            return $http.get('/api/users/userlist').then(handleSuccess, handleError);
+        }
 
         function GetCurrent() {
             return $http.get('/api/users/current').then(handleSuccess, handleError);

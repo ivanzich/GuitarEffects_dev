@@ -12,9 +12,10 @@
     <header>
         <ul class="nav nav-tabs">
             <li ng-class="{active: activeTab === 'home'}"><a ui-sref="home">Home</a></li>
-            <li ng-class="{active: activeTab === 'account'}"><a ui-sref="account">Account</a></li>
-            <li ng-class="{active: activeTab === 'pedals'}"><a ui-sref="pedals">Pedals</a></li>
+            <li ng-class="{active: activeTab === 'account'}"><a ui-sref="account">My Account</a></li>
+            <li ng-class="{active: activeTab === 'pedalEffect'}"><a ui-sref="pedalEffect">Pedal Effect</a></li>
             <li ng-class="{active: activeTab === 'usermanagement'}"><a ui-sref="usermanagement">User Management</a></li>
+            <li><a href="/api/userlist" target="_self">userlist</a></li>
             <li><a href="/login" target="_self">Logout</a></li>
         </ul>
         <div class="flash-message" ng-if="flash">
@@ -43,7 +44,7 @@
     <script src="app-services/flash.service.js"></script>
     <script src="home/index.controller.js"></script>
     <script src="account/index.controller.js"></script>
-    <script src="pedals/pedals.controller.js"></script>
+    <script src="pedalEffect/pedalEffectController.js"></script>
     <script src="userManagement/userManagementController.js"></script>
 
 

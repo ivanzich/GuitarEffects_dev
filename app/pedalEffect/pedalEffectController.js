@@ -6,7 +6,7 @@
 
     angular
         .module('app')
-        .controller('Pedals.IndexController', Controller);
+        .controller('PedalEffectController', Controller);
 
     function Controller() {
         var vm = this;

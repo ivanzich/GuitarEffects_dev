@@ -8,10 +8,22 @@ var log = require('../logs/accessLog.controller.js');
 router.post('/authenticate', authenticateUser);
 router.post('/register', registerUser);
 router.get('/current', getCurrentUser);
+router.get('/userlist', getUserList);
 router.put('/:_id', updateUser);
 router.delete('/:_id', deleteUser);
 
 module.exports = router;
+
+
+function getUserList(req, res){
+    userService.getUserList()
+        .then(function(userList){
+            res.send(userList);
+        })
+        .catch(function (err) {
+            res.status(400).send(err);
+        });
+}
 
 function authenticateUser(req, res) {
     userService.authenticate(req.body.username, req.body.password)

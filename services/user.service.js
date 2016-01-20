@@ -15,6 +15,7 @@ service.getById = getById;
 service.create = create;
 service.update = update;
 service.delete = _delete;
+service.getUserList = getUserList;
 
 module.exports = service;
 
@@ -35,6 +36,23 @@ function authenticate(username, password) {
 
     return deferred.promise;
 }
+
+
+function getUserList(){
+    var deferred = Q.defer();
+    console.log('je passe');
+    usersDb.find({},function(err, users){
+        if(err) deferred.reject(err);
+        if(users) {
+            console.log(users);
+            deferred.resolve(users);
+        } else {
+            deferred.resolve();
+        }
+    });
+    return deferred.promise;
+}
+
 
 function getById(_id) {
     var deferred = Q.defer();

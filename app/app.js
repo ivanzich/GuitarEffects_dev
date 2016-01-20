@@ -29,12 +29,12 @@
                 controllerAs: 'vm',
                 data: {activeTab: 'account'}
             })
-            .state('pedals', {
-                url: '/pedals',
-                templateUrl: 'pedals/pedals.html',
-                controller: 'Pedals.IndexController',
+            .state('pedalEffect', {
+                url: '/pedalEffect',
+                templateUrl: 'pedalEffect/pedalEffect.html',
+                controller: 'PedalEffectController',
                 controllerAs: 'vm',
-                data: {activeTab: 'pedals'}
+                data: {activeTab: 'pedalEffect'}
             })
             .state('usermanagement', {
                 url: '/usermanagement',
