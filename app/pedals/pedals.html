@@ -1,27 +1,11 @@
-<div class="principale">
-
-    </br> </br> </br>
-
-    <div class="container" ng-click="change()">
-        <select class="ajoutEffets"  >
-            <option ng-repeat="effet in effets">{{effet.titre}}</option>
-        </select>
+    <div class="btn btn-primary" data-drag="true"
+         data-jqyoui-options="{revert: 'invalid'}" ng-model="vm.list1"
+         jqyoui-draggable="{animate:true}" ng-hide="!vm.list1.title">
+        {{vm.list1.title}}
     </div>
-
-    </br> </br>
-
-    <div ng-click="mouseOver($index)" class="module audiobuffersource has-footer has-loop" ng-repeat="composant in composants" id="{{composant.id}}">
-
-        <div  class="content" >
-            <img class="close" ng-src="{{composant.sup}}" width="20" height="20" ng-click="delete($index)">
-            <h6 class="module-title">{{composant.h6}}</h6>
-            <img class="img" ng-src="{{composant.src}}" width="50" height="50">
-        </div>
-
-
-    </div>
-
-    <div id="output" class="destination"  >
-        <div class="node node-input" ><span  id="sortie" class="node-button">&nbsp;</span></div>
+<div class="thumbnail" data-drop="true" data-jqyoui-options ng-model="vm.list2" jqyoui-droppable
+     style='height:50px;margin-top: 20px;'>
+    <div class="btn btn-success" data-drag="false" data-jqyoui-options ng-model="vm.list2" jqyoui-draggable
+         ng-hide="!vm.list2.title">{{vm.list2.title}}
     </div>
 </div>

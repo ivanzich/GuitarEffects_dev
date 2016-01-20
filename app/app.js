@@ -1,8 +1,13 @@
 ﻿(function () {
     'use strict';
 
+
+
     angular
-        .module('app', ['ui.router'])
+        .module('app', [
+            'ui.router',
+            'ngDragDrop'
+        ])
         .config(config)
         .run(run);
 
