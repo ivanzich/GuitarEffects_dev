@@ -42,6 +42,13 @@
                 controller: 'UserManagementController',
                 controllerAs: 'vm',
                 data: {activeTab: 'usermanagement'}
+            })
+            .state('musicplayer', {
+                url: '/musicplayer',
+                templateUrl: 'musicPlayer/musicPlayer.html',
+                controller: 'MusicPlayerController',
+                controllerAs: 'vm',
+                data: {activeTab: 'musicplayer'}
             });
     }
 

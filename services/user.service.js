@@ -40,11 +40,9 @@ function authenticate(username, password) {
 
 function getUserList(){
     var deferred = Q.defer();
-    console.log('je passe');
     usersDb.find({},function(err, users){
         if(err) deferred.reject(err);
         if(users) {
-            console.log(users);
             deferred.resolve(users);
         } else {
             deferred.resolve();

@@ -15,6 +15,7 @@
             <li ng-class="{active: activeTab === 'account'}"><a ui-sref="account">My Account</a></li>
             <li ng-class="{active: activeTab === 'pedalEffect'}"><a ui-sref="pedalEffect">Pedal Effect</a></li>
             <li ng-class="{active: activeTab === 'usermanagement'}"><a ui-sref="usermanagement">User Management</a></li>
+            <li ng-class="{active: activeTab === 'musicplayer'}"><a ui-sref="musicplayer">Music Player</a></li>
             <li><a href="/login" target="_self">Logout</a></li>
         </ul>
         <div class="flash-message" ng-if="flash">
@@ -45,6 +46,7 @@
     <script src="account/index.controller.js"></script>
     <script src="pedalEffect/pedalEffectController.js"></script>
     <script src="userManagement/userManagementController.js"></script>
+    <script src="musicPlayer/musicPlayerController.js"></script>
 
 
 
