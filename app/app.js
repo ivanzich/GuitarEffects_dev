@@ -2,7 +2,6 @@
     'use strict';
 
 
-
     angular
         .module('app', [
             'ui.router',
@@ -36,6 +35,13 @@
                 controller: 'Pedals.IndexController',
                 controllerAs: 'vm',
                 data: {activeTab: 'pedals'}
+            })
+            .state('usermanagement', {
+                url: '/usermanagement',
+                templateUrl: 'userManagement/userManagement.html',
+                controller: 'UserManagementController',
+                controllerAs: 'vm',
+                data: {activeTab: 'usermanagement'}
             });
     }
 

@@ -14,6 +14,7 @@
             <li ng-class="{active: activeTab === 'home'}"><a ui-sref="home">Home</a></li>
             <li ng-class="{active: activeTab === 'account'}"><a ui-sref="account">Account</a></li>
             <li ng-class="{active: activeTab === 'pedals'}"><a ui-sref="pedals">Pedals</a></li>
+            <li ng-class="{active: activeTab === 'usermanagement'}"><a ui-sref="usermanagement">User Management</a></li>
             <li><a href="/login" target="_self">Logout</a></li>
         </ul>
         <div class="flash-message" ng-if="flash">
@@ -22,7 +23,7 @@
     </header>
 
     <!-- main -->
-    <main ui-view></main>
+    <main ui-view  style="padding-top: 1em"></main>
 
     <!-- footer -->
     <footer></footer>
@@ -43,6 +44,7 @@
     <script src="home/index.controller.js"></script>
     <script src="account/index.controller.js"></script>
     <script src="pedals/pedals.controller.js"></script>
+    <script src="userManagement/userManagementController.js"></script>
 
 
 
