@@ -1,0 +1,23 @@
+{
+  "name": "GuitarEffects_dev",
+  "homepage": "https://github.com/frouyer193/GuitarEffects_dev",
+  "authors": [
+    "Florian Rouyer <rouyer.florian@gmail.com>"
+  ],
+  "description": "Projet prog client server",
+  "main": "serer.js",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-dragdrop": "~1.0.13"
+  }
+}
