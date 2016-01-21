@@ -11,8 +11,14 @@
         var context,
             soundSource,
             soundBuffer,
-            url = 'music.mp3';
+            url = 'app-content/music/music.mp3';
 
+        var vm = this;
+
+        vm.startSound = startSound;
+        vm.stopSound = stopSound;
+
+        initController();
 
         // Step 1 - Initialise the Audio Context
         // There can be only one!
