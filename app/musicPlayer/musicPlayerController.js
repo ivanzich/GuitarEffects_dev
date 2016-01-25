@@ -17,6 +17,7 @@
 
         vm.startSound = startSound;
         vm.stopSound = stopSound;
+        vm.startMicro = startMicro;
 
         initController();
 
@@ -113,9 +114,36 @@
             }
             return curve;
         }
+
+        function startMicro()
+        {
+
+            navigator.getUserMedia = navigator.getUserMedia ||
+            navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia ||
+            navigator.msGetUserMedia;
+            navigator.getUserMedia(
+              {
+                  audio: true
+              },
+              function (e) {
+                window.AudioContext = window.AudioContext || window.webkitAudioContext;
+                context = new AudioContext();
+
+                // creates an audio node from the microphone incoming stream
+                mediaStream = context.createMediaStreamSource(e);
+
+                mediaStream.connect(context.destination);
+                mediaStream.start();
+
+                // success
+              },
+              function (e) {
+                // error
+                console.error(e);
+              });
+        }
     }
 
 
 })();
-
-
