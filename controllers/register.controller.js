@@ -23,7 +23,8 @@ router.post('/', function (req, res) {
                 error: response.body,
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
-                username: req.body.username
+                username: req.body.username,
+                avatar: req.body.avatar
             });
         }
 

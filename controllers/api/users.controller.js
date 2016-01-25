@@ -45,7 +45,7 @@ function authenticateUser(req, res) {
 function registerUser(req, res) {
     userService.create(req.body)
         .then(function () {
-            log.info(req.body.username +' has created account');
+            log.info(req.body.username +' has created account '+req.body.avatar);
             res.sendStatus(200);
         })
         .catch(function (err) {

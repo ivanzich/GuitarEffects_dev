@@ -12,13 +12,16 @@
         var vm = this;
 
         vm.userList = null;
+        vm.valAvatar = null;
 
         initController();
 
         function initController() {
+            console.log('passe');
             UserService.GetUserList()
                 .then(function (userList) {
                     vm.userList = userList;
+                    console.log(userList);
                 })
                 .catch(function (error) {
                     FlashService.Error(error);

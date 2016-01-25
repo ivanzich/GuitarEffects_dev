@@ -18,6 +18,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular-dragdrop": "~1.0.13"
+    "angular-dragdrop": "~1.0.13",
+    "jquery": "~2.2.0"
   }
 }
