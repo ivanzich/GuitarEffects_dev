@@ -12,7 +12,6 @@
         var vm = this;
 
         vm.userList = null;
-        vm.valAvatar = null;
 
         initController();
 
