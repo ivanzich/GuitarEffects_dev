@@ -5,6 +5,8 @@
     <title>Guitar Effects</title>
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="bower_components/angular-bootstrap-simple-chat/src/css/themes.css">
+    <link rel="stylesheet" href="bower_components/angular-bootstrap-simple-chat/src/css/style.css">
     <link href="app-content/app.css" rel="stylesheet" />
 </head>
 <body class="container">
@@ -16,6 +18,7 @@
             <li ng-class="{active: activeTab === 'pedalEffect'}"><a ui-sref="pedalEffect">Pedal Effect</a></li>
             <li ng-class="{active: activeTab === 'usermanagement'}"><a ui-sref="usermanagement">User Management</a></li>
             <li ng-class="{active: activeTab === 'musicplayer'}"><a ui-sref="musicplayer">Music Player</a></li>
+            <li ng-class="{active: activeTab === 'chat'}"><a ui-sref="chat">Chat</a></li>
             <li><a href="/login" target="_self">Logout</a></li>
         </ul>
         <div class="flash-message" ng-if="flash">
@@ -34,6 +37,9 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
     <script src="bower_components/angular-dragdrop/src/angular-dragdrop.min.js"></script>
+    <script src="bower_components/angular-bootstrap-simple-chat/src/scripts/index.js"></script>
+    <script src="bower_components/angular-bootstrap-simple-chat/src/scripts/templates.js"></script>
+    <script src="bower_components/lodash/dist/lodash.min.js"></script>
 
 
 
@@ -42,10 +48,12 @@
     <script src="app.js"></script>
     <script src="app-services/user.service.js"></script>
     <script src="app-services/flash.service.js"></script>
+    <script src="app-services/socket.service.js"></script>
     <script src="home/index.controller.js"></script>
     <script src="account/index.controller.js"></script>
     <script src="pedalEffect/pedalEffectController.js"></script>
     <script src="userManagement/userManagementController.js"></script>
+    <script src="chat/chatController.js"></script>
     <script src="musicPlayer/musicPlayerController.js"></script>
 
 

@@ -5,7 +5,8 @@
     angular
         .module('app', [
             'ui.router',
-            'ngDragDrop'
+            'ngDragDrop',
+            'irontec.simpleChat'
         ])
         .config(config)
         .run(run);
@@ -49,6 +50,13 @@
                 controller: 'MusicPlayerController',
                 controllerAs: 'vm',
                 data: {activeTab: 'musicplayer'}
+            })
+            .state('chat', {
+                url: '/chat',
+                templateUrl: 'chat/chat.html',
+                controller: 'ChatController',
+                controllerAs: 'vm',
+                data: {activeTab: 'chat'}
             });
     }
 
