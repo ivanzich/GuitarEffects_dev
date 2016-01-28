@@ -7,7 +7,8 @@
             'ui.router',
             'ngDragDrop',
             'irontec.simpleChat',
-            'flowChart'
+            'flowChart',
+            'rzModule'
         ])
         .config(config)
         .run(run);

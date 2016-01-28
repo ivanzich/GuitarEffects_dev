@@ -15,6 +15,7 @@
 
         var vm = this;
 
+        vm.priceSlider = 150;
         vm.startSound = startSound;
         vm.stopSound = stopSound;
         vm.startMicro = startMicro;
@@ -100,6 +101,16 @@
             });
 
         }
+
+        function applyEffect(soundSource,effetArray,destination){
+            soundSource.connect(effetArray[0]);
+            var i;
+            for(i=0;  i+1< effetArray.length;i++){
+                effetArray[i].connect(effetArray[i+1]);
+            }
+            effetArray[i+1].connect(destination);
+        }
+        
 
         function makeDistortionCurve(amount) {
             var k = typeof amount === 'number' ? amount : 50,
