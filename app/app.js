@@ -6,7 +6,8 @@
         .module('app', [
             'ui.router',
             'ngDragDrop',
-            'irontec.simpleChat'
+            'irontec.simpleChat',
+            'flowChart'
         ])
         .config(config)
         .run(run);
@@ -57,6 +58,13 @@
                 controller: 'ChatController',
                 controllerAs: 'vm',
                 data: {activeTab: 'chat'}
+            })
+            .state('jsplump', {
+                url: '/jsplump',
+                templateUrl: 'jsPlumpTest/jsPlump.html',
+                controller: 'JsPlumpController',
+                controllerAs: 'vm',
+                data: {activeTab: 'jsplump'}
             });
     }
 
