@@ -16,6 +16,7 @@
         var vm = this;
 
         vm.priceSlider = 150;
+        vm.price =20;
         vm.startSound = startSound;
         vm.stopSound = stopSound;
         vm.startMicro = startMicro;
