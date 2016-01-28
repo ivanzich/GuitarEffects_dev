@@ -60,12 +60,12 @@
                 controllerAs: 'vm',
                 data: {activeTab: 'chat'}
             })
-            .state('jsplump', {
-                url: '/jsplump',
-                templateUrl: 'pedalEffect/jsPlump.html',
-                controller: 'JsPlumpController',
+            .state('effect', {
+                url: '/effect',
+                templateUrl: 'effect/effect.html',
+                controller: 'EffectController',
                 controllerAs: 'vm',
-                data: {activeTab: 'jsplump'}
+                data: {activeTab: 'effect'}
             });
     }
 
