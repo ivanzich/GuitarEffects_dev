@@ -131,7 +131,7 @@
                 context = new AudioContext();
 
                 // creates an audio node from the microphone incoming stream
-                mediaStream = context.createMediaStreamSource(e);
+                var mediaStream = context.createMediaStreamSource(e);
 
                 mediaStream.connect(context.destination);
                 mediaStream.start();

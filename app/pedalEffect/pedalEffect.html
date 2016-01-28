@@ -1,16 +1,47 @@
-<div class="btn btn-primary" data-drag="true" ng-model="vm.list1"
-     jqyoui-draggable ng-hide="!vm.list1.title">
-    {{vm.list1.title}}
+<div
+        mouse-capture
+        ng-keydown="vm.keyDown($event)"
+        ng-keyup="vm.keyUp($event)">
+    <div class="btn-group">
+        <button
+                class="btn btn-primary"
+                ng-click="vm.addNewNode()"
+                title="Add a new node to the chart"
+        >
+            Add Node
+        </button>
+        <button
+                class="btn btn-primary"
+                ng-click="vm.addNewInputConnector()"
+                ng-disabled="vm.chartViewModel.getSelectedNodes().length == 0"
+                title="Add a new input connector to the selected node"
+        >
+            Add Input Connector
+        </button>
+        <button
+                class="btn btn-primary"
+                ng-click="vm.addNewOutputConnector()"
+                ng-disabled="vm.chartViewModel.getSelectedNodes().length == 0"
+                title="Add a new output connector to the selected node"
+        >
+            Add Output Connector
+        </button>
+        <button
+                class="btn btn-primary"
+                ng-click="vm.deleteSelected()"
+                ng-disabled="vm.chartViewModel.getSelectedNodes().length == 0 && vm.chartViewModel.getSelectedConnections().length == 0"
+                title="Delete selected nodes and connections"
+        >
+            Delete Selected
+        </button>
+    </div>
+    <figure class="highlight">
+    <!--
+    This custom element defines the flowchart.
+    -->
+    <flow-chart
+            chart="vm.chartViewModel"
+    >
+    </flow-chart>
+</figure>
 </div>
-<!--<div class="btn btn-primary" data-drag="true"-->
-     <!--data-jqyoui-options="{revert: 'invalid'}" ng-model="vm.list1"-->
-     <!--jqyoui-draggable="{animate:true}" ng-hide="!vm.list1.title">-->
-    <!--{{vm.list1.title}}-->
-<!--</div>-->
-
-<!--<div class="thumbnail" data-drop="true" data-jqyoui-options ng-model="vm.list2" jqyoui-droppable-->
-     <!--style='height:50px;margin-top: 20px;'>-->
-    <!--<div class="btn btn-success" data-drag="false" data-jqyoui-options ng-model="vm.list2" jqyoui-draggable-->
-         <!--ng-hide="!vm.list2.title">{{vm.list2.title}}-->
-    <!--</div>-->
-<!--</div>-->

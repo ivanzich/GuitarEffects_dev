@@ -9,7 +9,7 @@ angular.module('flowChart', ['dragging'] )
 .directive('flowChart', function() {
   return {
   	restrict: 'E',
-  	templateUrl: "flowchart/flowchart_template.html",
+  	templateUrl: "app-content/js/flowchart_template.html",
   	replace: true,
   	scope: {
   		chart: "=chart",

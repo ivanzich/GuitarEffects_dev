@@ -61,7 +61,7 @@
             })
             .state('jsplump', {
                 url: '/jsplump',
-                templateUrl: 'jsPlumpTest/jsPlump.html',
+                templateUrl: 'pedalEffect/jsPlump.html',
                 controller: 'JsPlumpController',
                 controllerAs: 'vm',
                 data: {activeTab: 'jsplump'}
