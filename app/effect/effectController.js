@@ -5,19 +5,56 @@
         .module('app')
         .controller('EffectController', Controller);
 
-    function Controller(UserService) {
+    function Controller() {
         var vm = this;
 
-        vm.user = null;
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
-        initController();
+        var context = new AudioContext();
+        var filtre = context.createBiquadFilter();
+        var gainNode = context.createGain();
+        //Declaration des variables effects
+        var mic=null;
+        var reverb = null;
 
-        function initController() {
-            // get current user
-            UserService.GetCurrent().then(function (user) {
-                vm.user = user;
-            });
-        }
+        //Fonction pour activer le micro
+        vm.activerMicro=function()
+        {
+            if(vm.micro)
+            {
+                navigator.getUserMedia = navigator.getUserMedia ||
+                navigator.webkitGetUserMedia ||
+                navigator.mozGetUserMedia ||
+                navigator.msGetUserMedia;
+                navigator.getUserMedia(
+                {
+                    audio: true
+                },
+                    function (e) {
+
+                        mic = context.createMediaStreamSource(e);
+                        mic.connect(context.destination);
+                        mic.start();
+                    },
+                    function (e) {
+                        // error
+                        console.error(e);
+                    });
+            }else{
+                mic.disconnect();
+            }
+        };
+
+        //Fonction pour activer reverb
+        vm.slider = {
+            value: 150,
+            options: {
+                floor: 0,
+                ceil: 200
+            }
+        };
+
+
     }
 
 })();

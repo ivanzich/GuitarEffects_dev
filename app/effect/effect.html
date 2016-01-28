@@ -1,5 +1,21 @@
-<div class="jumbotron">
-    <h1>Hi {{vm.user.firstName}} </h1>
-    <p>Page de test pour les effets</p>
-    <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+<style>
+    .content{
+        border: 1px blue dashed;
+        width: 250px;
+        height:150px;
+        color: #04acec;
+        background-color: #D0CBCB; /* Le fond de la page sera blanc */
+    }
+</style>
+
+<div class="micro">
+    <h3>activer micro</h3>
+    <input type="checkbox" ng-model="vm.micro" ng-click="vm.activerMicro()">
+</div>
+<div class="content">
+    <h3>effect Delay</h3>
+    <label>Delay Time</label>
+    <br>
+    <input type="checkbox" ng-model="vm.reverb" ng-click="vm.activerReverb()">
+    <rzslider  rz-slider-model="vm.slider.value"  rz-slider-options="vm.slider.options"></rzslider>
 </div>
