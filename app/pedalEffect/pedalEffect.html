@@ -34,14 +34,28 @@
         >
             Delete Selected
         </button>
+        <button
+                class="btn btn-primary"
+                title="Delete selected nodes and connections">
+            Play sound
+        </button>
+    </div>
+    <div>
+        <form name="myForm" class="btn btn-secondary" >
+            <label for="repeatSelect"> Repeat select: </label>
+            <select name="repeatSelect" id="repeatSelect" ng-model="vm.data.repeatSelect" ng-change="vm.addNewNode(vm.data.repeatSelect)">
+                <option ng-repeat="option in vm.data.availableOptions" value="{{option.id}}">{{option.name}}</option>
+            </select>
+        </form>
+
+
     </div>
     <figure class="highlight">
     <!--
     This custom element defines the flowchart.
     -->
-    <flow-chart
-            chart="vm.chartViewModel"
-    >
-    </flow-chart>
+        <flow-chart
+                chart="vm.chartViewModel">
+        </flow-chart>
 </figure>
 </div>

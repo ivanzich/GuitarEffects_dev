@@ -36,6 +36,8 @@
         //
         var nextNodeID = 10;
 
+
+
         //
         // Setup the data-model for the chart.
         //
@@ -43,91 +45,74 @@
 
             nodes: [
                 {
-                    name: "Example Node 1",
+                    name: "Input",
                     id: 0,
                     x: 0,
                     y: 0,
-                    width: 350,
+                    width: 150,
                     inputConnectors: [
-                        {
-                            name: "A",
-                        },
-                        {
-                            name: "B",
-                        },
-                        {
-                            name: "C",
-                        },
                     ],
                     outputConnectors: [
                         {
-                            name: "A",
+                            name: " ",
                         },
-                        {
-                            name: "B",
-                        },
-                        {
-                            name: "C",
-                        },
+
                     ],
                 },
+                {
+                name: 'Distortion',
+                id: 2,
+                x: 250,
+                y: 300,
+                inputConnectors: [
+                    {
+                        name: "X"
+                    }
+                ],
+                outputConnectors: [
+                    {
+                        name: "1"
+                    }
+                ],
+            },
 
                 {
-                    name: "Example Node 2",
+                    name: "Output",
                     id: 1,
                     x: 400,
                     y: 200,
+                    width:150,
                     inputConnectors: [
                         {
-                            name: "A",
-                        },
-                        {
-                            name: "B",
-                        },
-                        {
-                            name: "C",
+                            name: " ",
                         },
                     ],
                     outputConnectors: [
-                        {
-                            name: "A",
-                        },
-                        {
-                            name: "B",
-                        },
-                        {
-                            name: "C",
-                        },
                     ],
                 },
 
             ],
 
-            connections: [
-                {
-                    name:'Connection 1',
-                    source: {
-                        nodeID: 0,
-                        connectorIndex: 1,
-                    },
-
-                    dest: {
-                        nodeID: 1,
-                        connectorIndex: 2,
-                    },
+            connections: [{
+                "source": {
+                    "nodeID": 0,
+                    "connectorIndex": 0
                 },
+                "dest": {
+                    "nodeID": 2,
+                    "connectorIndex": 0
+                }
+            },
                 {
-                    name:'Connection 2',
-                    source: {
-                        nodeID: 0,
-                        connectorIndex: 0,
+                    "source": {
+                        "nodeID": 2,
+                        "connectorIndex": 0
                     },
-
-                    dest: {
-                        nodeID: 1,
-                        connectorIndex: 0,
-                    },
-                },
+                    "dest": {
+                        "nodeID": 1,
+                        "connectorIndex": 0
+                    }
+                }
 
             ]
         };
@@ -141,6 +126,70 @@
         vm.addNewOutputConnector= addNewOutputConnector;
         vm.deleteSelected = deleteSelected;
         vm.chartViewModel = new flowchart.ChartViewModel(chartDataModel);
+
+        vm.data = {
+            repeatSelect: null,
+            availableOptions: [
+                {id: '0', name: 'Distorsion',
+                node: {
+                    name: 'Distorsion',
+                    id: nextNodeID++,
+                    x: 0,
+                    y: 0,
+                    inputConnectors: [
+                        {
+                            name: " "
+                        }
+                    ],
+                    outputConnectors: [
+                        {
+                            name: " "
+                        }
+                    ]
+                }},
+                {id: '5', name: 'Option B',
+                    node: {
+                        name: 'Option B',
+                        id: nextNodeID++,
+                        x: 0,
+                        y: 0,
+                        inputConnectors: [
+                            {
+                                name: " "
+                            },
+                            {
+                                name: " "
+                            }
+                        ],
+                        outputConnectors: [
+                            {
+                                name: " "
+                            }
+                        ]
+                    }},
+                {id: '25', name: 'Option C',
+                    node: {
+                        name: 'Option C',
+                        id: nextNodeID++,
+                        x: 0,
+                        y: 0,
+                        inputConnectors: [
+                            {
+                                name: " "
+                            }
+                        ],
+                        outputConnectors: [
+                            {
+                                name: " "
+                            },
+                            {
+                                name: " "
+                            }
+                        ]
+                    }}
+            ],
+        };
+
 
         //
         // Event handler for key-down on the flowchart.
@@ -189,62 +238,103 @@
         //
         // Add a new node to the chart.
         //
-        function addNewNode() {
+        function addNewNode(id) {
+            var option = (!id) ? null : vm.data.availableOptions.filter(function(option) {
+                return (option.id === id);
+            })[0];
 
-            var nodeName = prompt("Enter a node name:", "New node");
-            if (!nodeName) {
-                return;
+
+            if (!option) {
+                var nodeName = prompt("Enter a node name:", "New node");
+
+                if (!nodeName) {
+                    return;
+                }
+                //
+                // Template for a new node.
+                //
+                var newNodeDataModel = {
+                    name: nodeName,
+                    id: nextNodeID++,
+                    x: 0,
+                    y: 0,
+                    inputConnectors: [
+                        {
+                            name: "X"
+                        },
+                        {
+                            name: "Y"
+                        },
+                        {
+                            name: "Z"
+                        }
+                    ],
+                    outputConnectors: [
+                        {
+                            name: "1"
+                        },
+                        {
+                            name: "2"
+                        },
+                        {
+                            name: "3"
+                        }
+                    ],
+                };
+            } else{
+                /*var newNodeDataModel = {
+                    name: option.name,
+                    id: nextNodeID++,
+                    x: 0,
+                    y: 0,
+                    inputConnectors: [
+                        {
+                            name: "X"
+                        },
+                        {
+                            name: "Y"
+                        },
+                        {
+                            name: "Z"
+                        }
+                    ],
+                    outputConnectors: [
+                        {
+                            name: "1"
+                        },
+                        {
+                            name: "2"
+                        },
+                        {
+                            name: "3"
+                        }
+                    ],
+                };*/
+                var newNodeDataModel = angular.copy(option.node);
             }
-
-            //
-            // Template for a new node.
-            //
-            var newNodeDataModel = {
-                name: nodeName,
-                id: nextNodeID++,
-                x: 0,
-                y: 0,
-                inputConnectors: [
-                    {
-                        name: "X"
-                    },
-                    {
-                        name: "Y"
-                    },
-                    {
-                        name: "Z"
-                    }
-                ],
-                outputConnectors: [
-                    {
-                        name: "1"
-                    },
-                    {
-                        name: "2"
-                    },
-                    {
-                        name: "3"
-                    }
-                ],
-            };
-
+            vm.data.repeatSelect = null;
             vm.chartViewModel.addNode(newNodeDataModel);
         };
+
+
+
 
         //
         // Add an input connector to selected nodes.
         //
         function addNewInputConnector() {
+            /*
             var connectorName = prompt("Enter a connector name:", "New connector");
             if (!connectorName) {
                 return;
             }
-
+            */
             var selectedNodes = vm.chartViewModel.getSelectedNodes();
             for (var i = 0; i < selectedNodes.length; ++i) {
                 var node = selectedNodes[i];
                 node.addInputConnector({
-                    name: connectorName,
+                    //name: connectorName,
+                    name : ' ',
                 });
             }
         };
@@ -253,16 +343,19 @@
         // Add an output connector to selected nodes.
         //
         function addNewOutputConnector() {
+            /*
             var connectorName = prompt("Enter a connector name:", "New connector");
             if (!connectorName) {
                 return;
             }
+            */
 
             var selectedNodes = vm.chartViewModel.getSelectedNodes();
             for (var i = 0; i < selectedNodes.length; ++i) {
                 var node = selectedNodes[i];
                 node.addOutputConnector({
-                    name: connectorName,
+                    //name: connectorName,
+                    name : ' ',
                 });
             }
         };
