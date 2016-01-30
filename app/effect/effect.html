@@ -1,10 +1,9 @@
 <style>
     .content{
-        border: 1px blue dashed;
+
         width: 250px;
         height:150px;
         color: #04acec;
-        background-color: #D0CBCB; /* Le fond de la page sera blanc */
     }
 </style>
 
@@ -16,8 +15,16 @@
 </div>
 <div class="content">
     <h3>effect Delay</h3>
-    <label>Delay Time</label>
+    <input type="checkbox" ng-model="vm.delay" ng-click="vm.activerDelay()">
     <br>
+    <label>Delay Time</label>
+    <rzslider  rz-slider-model="vm.delayTime.value"  rz-slider-options="vm.delayTime.options"></rzslider>
+    <label>FeedBack</label>
+    <rzslider  rz-slider-model="vm.delayFeedback.value"  rz-slider-options="vm.delayFeedback.options"></rzslider>
+
+    <h3>effect Reverb</h3>
     <input type="checkbox" ng-model="vm.reverb" ng-click="vm.activerReverb()">
-    <rzslider  rz-slider-model="vm.slider.value"  rz-slider-options="vm.slider.options"></rzslider>
+
+
+
 </div>
