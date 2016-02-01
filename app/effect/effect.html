@@ -25,15 +25,14 @@
     <h3>effect Reverb</h3>
     <input type="checkbox" ng-model="vm.reverb" ng-click="vm.activerReverb()">
 
+    <h3>effect Gain Flo</h3>
+    <input type="checkbox" ng-model="vm.GainLfo" ng-click="vm.activerGainLfo()">
+    <rzslider  rz-slider-model="vm.lfoSpeed.value"  rz-slider-options="vm.lfoSpeed.options"></rzslider>
+
+    <br><br>
     <h3>effect Chorus</h3>
-    <input type="checkbox" ng-model="vm.reverb" ng-click="vm.activerReverb()">
-    <rzslider  rz-slider-model="vm.delayFeedback.value"  rz-slider-options="vm.delayFeedback.options"></rzslider>
-
-
-    <h3>effect vobrato</h3>
-    <input type="checkbox" ng-model="vm.reverb" ng-click="vm.activerReverb()">
-    <rzslider  rz-slider-model="vm.delayFeedback.value"  rz-slider-options="vm.delayFeedback.options"></rzslider>
-
+    <input type="checkbox" ng-model="vm.chorus" ng-click="vm.activerChorus()">
+    <rzslider  rz-slider-model="vm.chorusSpeed.value"  rz-slider-options="vm.chorusSpeed.options"></rzslider>
 
 
 </div>
