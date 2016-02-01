@@ -90,10 +90,9 @@ function deleteUser(req, res) {
         // can only delete own account
         return res.status(401).send('You can only delete your own account');
     }
-
+    log.info(req.user.username +'\'s account has been deleted');
     userService.delete(userId)
         .then(function () {
-            log.info(req.user.username +'\'s account has been deleted');
             res.sendStatus(200);
         })
         .catch(function (err) {
