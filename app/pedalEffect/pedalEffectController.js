@@ -6,6 +6,8 @@
         .controller('PedalEffectController', Controller);
 
     function Controller() {
+
+
         //
         // Code for the delete key.
         //
@@ -37,7 +39,6 @@
         var nextNodeID = 10;
 
 
-
         //
         // Setup the data-model for the chart.
         //
@@ -50,8 +51,7 @@
                     x: 0,
                     y: 0,
                     width: 150,
-                    inputConnectors: [
-                    ],
+                    inputConnectors: [],
                     outputConnectors: [
                         {
                             name: " ",
@@ -60,35 +60,34 @@
                     ],
                 },
                 {
-                name: 'Distortion',
-                id: 2,
-                x: 250,
-                y: 300,
-                inputConnectors: [
-                    {
-                        name: "X"
-                    }
-                ],
-                outputConnectors: [
-                    {
-                        name: "1"
-                    }
-                ],
-            },
+                    name: 'Distortion',
+                    id: 2,
+                    x: 250,
+                    y: 300,
+                    inputConnectors: [
+                        {
+                            name: "X"
+                        }
+                    ],
+                    outputConnectors: [
+                        {
+                            name: "1"
+                        }
+                    ],
+                },
 
                 {
                     name: "Output",
                     id: 1,
-                    x: 400,
-                    y: 200,
-                    width:150,
+                    x: 800,
+                    y: 100,
+                    width: 150,
                     inputConnectors: [
                         {
                             name: " ",
                         },
                     ],
-                    outputConnectors: [
-                    ],
+                    outputConnectors: [],
                 },
 
             ],
@@ -116,6 +115,10 @@
 
             ]
         };
+        var context,
+            soundSource,
+            soundBuffer,
+            url = 'app-content/music/music.mp3';
 
 
         var vm = this;
@@ -123,31 +126,51 @@
         vm.keyUp = keyUp;
         vm.addNewNode = addNewNode;
         vm.addNewInputConnector = addNewInputConnector;
-        vm.addNewOutputConnector= addNewOutputConnector;
+        vm.addNewOutputConnector = addNewOutputConnector;
         vm.deleteSelected = deleteSelected;
         vm.chartViewModel = new flowchart.ChartViewModel(chartDataModel);
+
+        vm.startSound = startSound;
+        vm.stopSound = stopSound;
+        vm.playSoundWithEffect= playSoundWithEffect;
+
+        initController();
+        // Step 1 - Initialise the Audio Context
+        // There can be only one!
+        function initController() {
+            if (typeof AudioContext !== "undefined") {
+                context = new AudioContext();
+            } else if (typeof webkitAudioContext !== "undefined") {
+                context = new webkitAudioContext();
+            } else {
+                throw new Error('AudioContext not supported. :(');
+            }
+        }
 
         vm.data = {
             repeatSelect: null,
             availableOptions: [
-                {id: '0', name: 'Distorsion',
-                node: {
-                    name: 'Distorsion',
-                    id: nextNodeID++,
-                    x: 0,
-                    y: 0,
-                    inputConnectors: [
-                        {
-                            name: " "
-                        }
-                    ],
-                    outputConnectors: [
-                        {
-                            name: " "
-                        }
-                    ]
-                }},
-                {id: '5', name: 'Option B',
+                {
+                    id: '0', name: 'Distortion',
+                    node: {
+                        name: 'Distortion',
+                        id: nextNodeID++,
+                        x: 0,
+                        y: 0,
+                        inputConnectors: [
+                            {
+                                name: " "
+                            }
+                        ],
+                        outputConnectors: [
+                            {
+                                name: " "
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: '5', name: 'Option B',
                     node: {
                         name: 'Option B',
                         id: nextNodeID++,
@@ -166,8 +189,10 @@
                                 name: " "
                             }
                         ]
-                    }},
-                {id: '25', name: 'Option C',
+                    }
+                },
+                {
+                    id: '25', name: 'Option C',
                     node: {
                         name: 'Option C',
                         id: nextNodeID++,
@@ -186,7 +211,8 @@
                                 name: " "
                             }
                         ]
-                    }}
+                    }
+                }
             ],
         };
 
@@ -194,7 +220,7 @@
         //
         // Event handler for key-down on the flowchart.
         //
-        function keyDown(evt){
+        function keyDown(evt) {
             if (evt.keyCode === ctrlKeyCode) {
 
                 ctrlDown = true;
@@ -239,7 +265,7 @@
         // Add a new node to the chart.
         //
         function addNewNode(id) {
-            var option = (!id) ? null : vm.data.availableOptions.filter(function(option) {
+            var option = (!id) ? null : vm.data.availableOptions.filter(function (option) {
                 return (option.id === id);
             })[0];
 
@@ -281,35 +307,7 @@
                         }
                     ],
                 };
-            } else{
-                /*var newNodeDataModel = {
-                    name: option.name,
-                    id: nextNodeID++,
-                    x: 0,
-                    y: 0,
-                    inputConnectors: [
-                        {
-                            name: "X"
-                        },
-                        {
-                            name: "Y"
-                        },
-                        {
-                            name: "Z"
-                        }
-                    ],
-                    outputConnectors: [
-                        {
-                            name: "1"
-                        },
-                        {
-                            name: "2"
-                        },
-                        {
-                            name: "3"
-                        }
-                    ],
-                };*/
+            } else {
                 var newNodeDataModel = angular.copy(option.node);
             }
             vm.data.repeatSelect = null;
@@ -317,24 +315,22 @@
         };
 
 
-
-
         //
         // Add an input connector to selected nodes.
         //
         function addNewInputConnector() {
             /*
-            var connectorName = prompt("Enter a connector name:", "New connector");
-            if (!connectorName) {
-                return;
-            }
-            */
+             var connectorName = prompt("Enter a connector name:", "New connector");
+             if (!connectorName) {
+             return;
+             }
+             */
             var selectedNodes = vm.chartViewModel.getSelectedNodes();
             for (var i = 0; i < selectedNodes.length; ++i) {
                 var node = selectedNodes[i];
                 node.addInputConnector({
                     //name: connectorName,
-                    name : ' ',
+                    name: ' ',
                 });
             }
         };
@@ -344,18 +340,18 @@
         //
         function addNewOutputConnector() {
             /*
-            var connectorName = prompt("Enter a connector name:", "New connector");
-            if (!connectorName) {
-                return;
-            }
-            */
+             var connectorName = prompt("Enter a connector name:", "New connector");
+             if (!connectorName) {
+             return;
+             }
+             */
 
             var selectedNodes = vm.chartViewModel.getSelectedNodes();
             for (var i = 0; i < selectedNodes.length; ++i) {
                 var node = selectedNodes[i];
                 node.addOutputConnector({
                     //name: connectorName,
-                    name : ' ',
+                    name: ' ',
                 });
             }
         };
@@ -368,6 +364,152 @@
             vm.chartViewModel.deleteSelected();
         };
 
+
+        // Step 2: Load our Sound using XHR
+        function startSound() {
+            // Note: this loads asynchronously
+            var request = new XMLHttpRequest();
+            request.open("GET", url, true);
+            request.responseType = "arraybuffer";
+
+            // Our asynchronous callback
+            request.onload = function () {
+                var audioData = request.response;
+                audioGraph(audioData);
+            };
+
+            request.send();
+        }
+
+        // Finally: tell the source when to start
+        function playSound() {
+            // play the source now
+            soundSource.start(context.currentTime);
+        }
+
+        function stopSound() {
+            // stop the source now
+            soundSource.stop(context.currentTime);
+        }
+
+        // This is the code we are interested in
+        function audioGraph(audioData) {
+            // create a sound source
+            soundSource = context.createBufferSource();
+
+            // The Audio Context handles creating source buffers from raw binary
+            context.decodeAudioData(audioData, function (soundBuffer) {
+                // Add the buffered data to our object
+                soundSource.buffer = soundBuffer;
+
+                var volumeNode = context.createGain();
+                //var distortion = context.createWaveShaper();
+                ///distortion.curve = makeDistortionCurve(400);
+                //distortion.oversample = '4x';
+
+                //Set the volume
+                volumeNode.gain.value = 0.1;
+
+                // Wiring
+                soundSource.connect(volumeNode);
+                //volumeNode.connect(context.destination);
+
+                playSoundWithEffect(volumeNode).connect(context.destination);
+                //addDistortion(volumeNode).connect(context.destination);
+                //filterNode.connect(distortion);
+                //distortion.connect(context.destination);
+
+                // Finally
+                playSound(soundSource);
+            });
+
+        }
+        function addFilterNode(source){
+            var filterNode = context.createBiquadFilter();
+            // Specify this is a lowpass filter
+            filterNode.type = 'lowpass';
+            // Quieten sounds over 220Hz
+            filterNode.frequency.value = 220;
+            source.connect(filterNode);
+            return filterNode;
+
+        };
+        function addDistortion(source){
+            var distortion = context.createWaveShaper();
+            distortion.curve = makeDistortionCurve(400);
+            distortion.oversample = '4x';
+            source.connect(distortion);
+            return distortion;
+        }
+
+        function makeDistortionCurve(amount) {
+            var k = typeof amount === 'number' ? amount : 50,
+                n_samples = 44100,
+                curve = new Float32Array(n_samples),
+                deg = Math.PI / 180,
+                i = 0,
+                x;
+            for (; i < n_samples; ++i) {
+                x = i * 2 / n_samples - 1;
+                curve[i] = ( 3 + k ) * x * 20 * deg / ( Math.PI + k * Math.abs(x) );
+            }
+            return curve;
+        }
+        function playSoundWithEffect(source){
+            return getTheSourceNodes(0,source);
+          //vm.chartViewModel.connections.length  console.log(vm.chartViewModel.connections[0].destnodeID.toString());
+            //console.log(vm.chartViewModel.connections[i].dest.nodeID));
+
+        }
+        function getTheDestNodes(destNode,source){
+            var i=0;
+            if(destNode !== 1){
+                for (i = 0; i < vm.chartViewModel.nodes.length; i++) {
+                    //console.log(vm.chartViewModel.nodes[i].data.id);
+                    if (vm.chartViewModel.nodes[i].data.id == destNode) {
+                        var effectAdded= addEffect(vm.chartViewModel.nodes[i].data.name,source);
+                        getTheSourceNodes(vm.chartViewModel.nodes[i].data.id,effectAdded);
+                    }
+                }
+            }else{
+                console.log("Return source");
+                return source;
+            }
+
+        }
+        function getTheSourceNodes(sourceNode,source){
+            var i=0;
+            for(i=0; i < vm.chartViewModel.connections.length; i++){
+                if(vm.chartViewModel.connections[i].data.source.nodeID == sourceNode){
+                    getTheDestNodes(vm.chartViewModel.connections[i].data.dest.nodeID,source);
+                };
+            }
+        }
+
+        function addEffect(effectName,source){
+            switch (effectName){
+                case 'Distortion':
+                    console.log('I am adding distortion effect');
+                    return addDistortion(source);
+                    break;
+                case 'Input':
+                    console.log('Input, I am beginning');
+                    return source;
+                    break;
+                case 'Output':
+                    console.log('Output, I finished');
+                    return source;
+                    break;
+                case 'Option B':
+                    console.log('I am adding option B');
+                    return source;
+                    break;
+                case 'Option C':
+                    console.log('I am adding option C');
+                    return source;
+                    break;
+            }
+        }
     }
 
 })();

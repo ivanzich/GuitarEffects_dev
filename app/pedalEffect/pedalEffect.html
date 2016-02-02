@@ -2,6 +2,7 @@
         mouse-capture
         ng-keydown="vm.keyDown($event)"
         ng-keyup="vm.keyUp($event)">
+
     <div class="btn-group">
         <button
                 class="btn btn-primary"
@@ -36,7 +37,8 @@
         </button>
         <button
                 class="btn btn-primary"
-                title="Delete selected nodes and connections">
+                ng-click="vm.startSound()"
+                title="Start sound">
             Play sound
         </button>
     </div>
