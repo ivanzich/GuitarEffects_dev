@@ -41,6 +41,7 @@
                     // log user out
                     if (redirect)
                         $window.location = '/login';
+
                 })
                 .catch(function (error) {
                     FlashService.Error(error);

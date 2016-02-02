@@ -15,9 +15,9 @@ router.delete('/:_id', deleteUser);
 module.exports = router;
 
 
-function getUserList(req, res){
+function getUserList(req, res) {
     userService.getUserList()
-        .then(function(userList){
+        .then(function (userList) {
             res.send(userList);
         })
         .catch(function (err) {
@@ -30,8 +30,8 @@ function authenticateUser(req, res) {
         .then(function (token) {
             if (token) {
                 // authentication successful
-                log.info(req.body.username +' connected');
-                res.send({ token: token });
+                log.info(req.body.username + ' connected');
+                res.send({token: token});
             } else {
                 // authentication failed
                 res.sendStatus(401);
@@ -45,7 +45,7 @@ function authenticateUser(req, res) {
 function registerUser(req, res) {
     userService.create(req.body)
         .then(function () {
-            log.info(req.body.username +' has created account '+req.body.avatar);
+            log.info(req.body.username + ' has created account ' + req.body.avatar);
             res.sendStatus(200);
         })
         .catch(function (err) {
@@ -76,7 +76,7 @@ function updateUser(req, res) {
 
     userService.update(userId, req.body)
         .then(function () {
-            log.info(req.user.username +'\'s account has been updated');
+            log.info(req.user.username + '\'s account has been updated');
             res.sendStatus(200);
         })
         .catch(function (err) {
@@ -86,16 +86,35 @@ function updateUser(req, res) {
 
 function deleteUser(req, res) {
     var userId = req.user.sub;
-    if (req.params._id !== userId) {
-        // can only delete own account
-        return res.status(401).send('You can only delete your own account');
-    }
-    log.info(req.user.username +'\'s account has been deleted');
-    userService.delete(userId)
-        .then(function () {
-            res.sendStatus(200);
+
+    userService.getById(req.user.sub)
+        .then(function (user) {
+            if (user) {
+
+
+                console.log('role : '+user.role);
+                console.log('userid : '+userId);
+                console.log('req.params : '+req.params._id);
+
+                if ((user.role.localeCompare('admin'))) {
+                    // can only delete own account
+                    console.log(user.role.localeCompare('admin'));
+                    return res.status(401).send('You can only delete your own account');
+                }
+                log.info(req.params.username + '\'s account has been deleted');
+                console.log(req.params._id);
+                userService.delete(req.params._id)
+                    .then(function () {
+                        res.sendStatus(200);
+                    })
+                    .catch(function (err) {
+                        res.status(400).send(err);
+                    });
+            }
+
         })
         .catch(function (err) {
             res.status(400).send(err);
         });
+
 }
