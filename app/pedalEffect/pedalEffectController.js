@@ -404,17 +404,33 @@
 
                 var volumeNode = context.createGain();
                 //var distortion = context.createWaveShaper();
-                ///distortion.curve = makeDistortionCurve(400);
+                //distortion.curve = makeDistortionCurve(400);
                 //distortion.oversample = '4x';
 
                 //Set the volume
-                volumeNode.gain.value = 0.1;
+                volumeNode.gain.value = 0.5;
 
                 // Wiring
                 soundSource.connect(volumeNode);
-                //volumeNode.connect(context.destination);
-
+                //volumeNode.connect(distortion);
                 playSoundWithEffect(volumeNode).connect(context.destination);
+                /*
+                vm.chartViewModel.connections.sort(function(x, y) {
+                    return x.data.source.id < y.data.source.id;
+
+
+                    //return (destNode == 1) ? source
+                    //    : vm.chartViewModel.nodes.filter(function(node) {
+                    //    return (node.data.id == destNode);
+                    //}).map(function(node) {
+                    //    return getTheSourceNodes(node.data.id, addEffect(node.data.name, source));
+                    //}).reduce(function(prev, next) {
+                    //    return prev.concat(next);
+                    //}, []).reduce(function(){});
+
+                }).map(function(x) {
+                    return [x.data.source.id, x.data.dest.id, x.data.name];
+                })*/
                 //addDistortion(volumeNode).connect(context.destination);
                 //filterNode.connect(distortion);
                 //distortion.connect(context.destination);
@@ -456,34 +472,55 @@
             return curve;
         }
         function playSoundWithEffect(source){
-            return getTheSourceNodes(0,source);
+
+            var r = getTheSourceNodes(0,source);
+
+            return r;
           //vm.chartViewModel.connections.length  console.log(vm.chartViewModel.connections[0].destnodeID.toString());
             //console.log(vm.chartViewModel.connections[i].dest.nodeID));
 
         }
         function getTheDestNodes(destNode,source){
-            var i=0;
-            if(destNode !== 1){
-                for (i = 0; i < vm.chartViewModel.nodes.length; i++) {
-                    //console.log(vm.chartViewModel.nodes[i].data.id);
-                    if (vm.chartViewModel.nodes[i].data.id == destNode) {
-                        var effectAdded= addEffect(vm.chartViewModel.nodes[i].data.name,source);
-                        getTheSourceNodes(vm.chartViewModel.nodes[i].data.id,effectAdded);
-                    }
-                }
-            }else{
-                console.log("Return source");
-                return source;
-            }
+            return (destNode == 1) ? source
+            : vm.chartViewModel.nodes.filter(function(node) {
+                return (node.data.id == destNode);
+            }).map(function(node) {
+                return getTheSourceNodes(node.data.id, addEffect(node.data.name, source));
+            }).reduce(function(prev, next) {
+                return prev.concat(next);
+            }, []).reduce(function(){});
+
+            //var i=0;
+            //if(destNode !== 1){
+            //    for (i = 0; i < vm.chartViewModel.nodes.length; i++) {
+            //        //console.log(vm.chartViewModel.nodes[i].data.id);
+            //        if (vm.chartViewModel.nodes[i].data.id == destNode) {
+            //            var effectAdded= addEffect(vm.chartViewModel.nodes[i].data.name,source);
+            //            return getTheSourceNodes(vm.chartViewModel.nodes[i].data.id,effectAdded);
+            //        }
+            //    }
+            //}else{
+            //
+            //    console.log("Return source");
+            //    return source;
+            //}
 
         }
         function getTheSourceNodes(sourceNode,source){
-            var i=0;
-            for(i=0; i < vm.chartViewModel.connections.length; i++){
-                if(vm.chartViewModel.connections[i].data.source.nodeID == sourceNode){
-                    getTheDestNodes(vm.chartViewModel.connections[i].data.dest.nodeID,source);
-                };
-            }
+
+            //var i=0;
+            //for(i=0; i < vm.chartViewModel.connections.length; i++){
+            //    if(vm.chartViewModel.connections[i].data.source.nodeID == sourceNode){
+            //        var y= getTheDestNodes(vm.chartViewModel.connections[i].data.dest.nodeID,source);
+            //        console.log(y);
+            //        return y;
+            //    };
+            //}
+            return vm.chartViewModel.connections.filter(function(connection) {
+                return (connection.data.source.nodeID == sourceNode);
+            }).map(function(connection) {
+                return getTheDestNodes(connection.data.dest.nodeID,source);
+            }).reduce(function(){});
         }
 
         function addEffect(effectName,source){
@@ -502,7 +539,7 @@
                     break;
                 case 'Option B':
                     console.log('I am adding option B');
-                    return source;
+                    return addFilterNode(source);
                     break;
                 case 'Option C':
                     console.log('I am adding option C');
