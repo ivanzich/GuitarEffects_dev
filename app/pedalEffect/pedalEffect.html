@@ -58,6 +58,8 @@
         </form>
 
     </div>
+    
+    <div class="box off" ng-hide="vm.chartViewModel.getSelectedNodes().length == 0 && vm.chartViewModel.getSelectedConnections().length == 0" ng-animate="'box'">Off</div>
 
     <figure class="highlight">
     <!--

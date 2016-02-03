@@ -122,6 +122,7 @@
 
 
         var vm = this;
+        vm.toggle = true;
         vm.keyDown = keyDown;
         vm.keyUp = keyUp;
         vm.addNewNode = addNewNode;
