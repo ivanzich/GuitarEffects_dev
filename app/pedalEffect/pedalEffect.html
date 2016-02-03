@@ -2,6 +2,8 @@
         mouse-capture
         ng-keydown="vm.keyDown($event)"
         ng-keyup="vm.keyUp($event)">
+
+
     <div class="btn-group">
         <button
                 class="btn btn-primary"
@@ -36,20 +38,29 @@
         </button>
         <button
                 class="btn btn-primary"
-                title="Delete selected nodes and connections">
+                ng-click="vm.startSound()"
+                title="Start sound">
             Play sound
+        </button>
+        <button
+                class="btn btn-primary"
+                ng-click="vm.stopSound()"
+                title="Stop sound">
+            Stop sound
         </button>
     </div>
     <div>
         <form name="myForm" class="btn btn-secondary" >
-            <label for="repeatSelect"> Repeat select: </label>
+            <label for="repeatSelect"> Select effect: </label>
             <select name="repeatSelect" id="repeatSelect" ng-model="vm.data.repeatSelect" ng-change="vm.addNewNode(vm.data.repeatSelect)">
                 <option ng-repeat="option in vm.data.availableOptions" value="{{option.id}}">{{option.name}}</option>
             </select>
         </form>
 
-
     </div>
+    
+    <div class="box off" ng-hide="vm.chartViewModel.getSelectedNodes().length == 0 && vm.chartViewModel.getSelectedConnections().length == 0" ng-animate="'box'">Off</div>
+
     <figure class="highlight">
     <!--
     This custom element defines the flowchart.

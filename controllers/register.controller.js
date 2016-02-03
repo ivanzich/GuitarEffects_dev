@@ -24,7 +24,8 @@ router.post('/', function (req, res) {
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 username: req.body.username,
-                avatar: req.body.avatar
+                avatar: req.body.avatar,
+                role: req.body.role
             });
         }
 

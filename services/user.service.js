@@ -1,4 +1,4 @@
-﻿var config = require('config.json');
+﻿var config = require('../config.json');
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk(config.connectionString);
@@ -22,12 +22,12 @@ module.exports = service;
 function authenticate(username, password) {
     var deferred = Q.defer();
 
-    usersDb.findOne({ username: username }, function (err, user) {
+    usersDb.findOne({username: username}, function (err, user) {
         if (err) deferred.reject(err);
 
         if (user && bcrypt.compareSync(password, user.hash)) {
             // authentication successful
-            deferred.resolve(jwt.sign({ sub: user._id }, config.secret));
+            deferred.resolve(jwt.sign({sub: user._id}, config.secret));
         } else {
             // authentication failed
             deferred.resolve();
@@ -37,12 +37,11 @@ function authenticate(username, password) {
     return deferred.promise;
 }
 
-
-function getUserList(){
+function getUserList() {
     var deferred = Q.defer();
-    usersDb.find({},function(err, users){
-        if(err) deferred.reject(err);
-        if(users) {
+    usersDb.find({}, function (err, users) {
+        if (err) deferred.reject(err);
+        if (users) {
             deferred.resolve(users);
         } else {
             deferred.resolve();
@@ -75,7 +74,7 @@ function create(userParam) {
 
     // validation
     usersDb.findOne(
-        { username: userParam.username },
+        {username: userParam.username},
         function (err, user) {
             if (err) deferred.reject(err);
 
@@ -116,7 +115,7 @@ function update(_id, userParam) {
         if (user.username !== userParam.username) {
             // username has changed so check if the new username is already taken
             usersDb.findOne(
-                { username: userParam.username },
+                {username: userParam.username},
                 function (err, user) {
                     if (err) deferred.reject(err);
 
@@ -146,8 +145,8 @@ function update(_id, userParam) {
         }
 
         usersDb.findAndModify(
-            { _id: _id },
-            { $set: set },
+            {_id: _id},
+            {$set: set},
             function (err, doc) {
                 if (err) deferred.reject(err);
 
@@ -161,13 +160,14 @@ function update(_id, userParam) {
 function _delete(_id) {
     var deferred = Q.defer();
 
-    usersDb.remove(
-        { _id: _id },
-        function (err) {
-            if (err) deferred.reject(err);
+        usersDb.remove(
+            {_id: _id},
+            function (err) {
+                if (err) deferred.reject(err);
 
-            deferred.resolve();
-        });
+                deferred.resolve();
+            });
+
 
     return deferred.promise;
 }
