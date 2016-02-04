@@ -8,6 +8,8 @@
         .module('app')
         .controller('UserManagementController', Controller);
 
+
+
     function Controller($window, UserService, FlashService) {
         var vm = this;
 
@@ -18,6 +20,7 @@
         initController();
 
         function initController() {
+
             UserService.GetCurrent().then(function (user) {
                 currentUser = user;
             });
