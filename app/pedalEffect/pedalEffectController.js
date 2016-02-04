@@ -74,8 +74,26 @@
                             name: "1"
                         }
                     ],
-                },
+                    parameters:[
+                        {
+                        name: 'Amount',
+                        value: 400,
+                            options: {
+                                floor: 0,
+                                ceil: 1000
+                            }
+                        },
+                        {
+                        name:'n_sample',
+                            value: 44100,
+                            options: {
+                                floor: 0,
+                                ceil: 100000
+                            }
+                        }
+                    ]
 
+                },
                 {
                     name: "Output",
                     id: 1,
@@ -122,6 +140,7 @@
 
 
         var vm = this;
+
         vm.toggle = true;
         vm.keyDown = keyDown;
         vm.keyUp = keyUp;
@@ -130,11 +149,15 @@
         vm.addNewOutputConnector = addNewOutputConnector;
         vm.deleteSelected = deleteSelected;
         vm.chartViewModel = new flowchart.ChartViewModel(chartDataModel);
-
         vm.startSound = startSound;
         vm.stopSound = stopSound;
         vm.playSoundWithEffect= playSoundWithEffect;
 
+        vm.debugConsole= debugConsole;
+
+        function debugConsole(){
+            console.log(vm.chartViewModel.getSelectedNodes()[0].data.parameters[0].value);
+        }
         initController();
         // Step 1 - Initialise the Audio Context
         // There can be only one!
@@ -171,9 +194,9 @@
                     }
                 },
                 {
-                    id: '5', name: 'Option B',
+                    id: '5', name: 'Filter',
                     node: {
-                        name: 'Option B',
+                        name: 'Filter',
                         id: nextNodeID++,
                         x: 0,
                         y: 0,
@@ -472,6 +495,21 @@
             }
             return curve;
         }
+
+
+        function makeDistortionCurve(amount,n_sample) {
+            var k = typeof amount === 'number' ? amount : 50,
+                curve = new Float32Array(n_samples),
+                deg = Math.PI / 180,
+                i = 0,
+                x;
+            for (; i < n_samples; ++i) {
+                x = i * 2 / n_samples - 1;
+                curve[i] = ( 3 + k ) * x * 20 * deg / ( Math.PI + k * Math.abs(x) );
+            }
+            return curve;
+        }
+
         function playSoundWithEffect(source){
 
             var r = getTheSourceNodes(0,source);
@@ -538,8 +576,8 @@
                     console.log('Output, I finished');
                     return source;
                     break;
-                case 'Option B':
-                    console.log('I am adding option B');
+                case 'Filter':
+                    console.log('I am adding Filter');
                     return addFilterNode(source);
                     break;
                 case 'Option C':

@@ -1,12 +1,8 @@
-/**
- * Created by frouyer on 18/01/16.
- */
-
-var config = require('config.json');
+var config = require('../config.json');
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk(config.connectionString);
-var effectsDb = db.get('effects');
+var projectsDB = db.get('projects');
 var _ = require('lodash');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
@@ -14,75 +10,73 @@ var Q = require('q');
 
 var service = {};
 
-service.getById = getById;
 service.create = create;
-service.getListEffects = getListEffects;
-//service.update = update;
-//service.delete = _delete;
+service.update = update;
+service.delete = _delete;
+service.getProjectList = getProjectList;
 
 module.exports = service;
+
+function getProjectList() {
+    var deferred = Q.defer();
+    projectsDB.find({}, function (err, project) {
+        if (err) deferred.reject(err);
+        if (project) {
+            deferred.resolve(project);
+        } else {
+            deferred.resolve();
+        }
+    });
+    return deferred.promise;
+}
+
 
 function getById(_id) {
     var deferred = Q.defer();
 
-    effectsDb.findById(_id, function (err, effetc) {
+    projectsDB.findById(_id, function (err, user) {
         if (err) deferred.reject(err);
 
-        if (effetc) {
-            // return effect
-            deferred.resolve(effetc);
+        if (user) {
+            // return user (without hashed password)
+            deferred.resolve(_.omit(user, 'hash'));
         } else {
-            // effect not found
+            // user not found
             deferred.resolve();
         }
     });
+
     return deferred.promise;
 }
 
-function getListEffects() {
-    var deferred = Q.defer();
-
-    effectsDb.findById(null, function (err, effect) {
-        if (err) deferred.reject(err);
-
-        if (effect) {
-            // return effect
-            deferred.resolve(effect);
-        } else {
-            // effect not found
-            deferred.resolve();
-        }
-    });
-    return deferred.promise;
-}
-
-function create(effectParam) {
+function create(projectParam) {
     var deferred = Q.defer();
 
     // validation
-    effectsDb.findOne(
-        { id: effectParam.id },
-
-        function (err, effect) {
+    projectsDB.findOne(
+        {title: projectParam.title},
+        function (err, project) {
             if (err) deferred.reject(err);
 
-            if (effect) {
-                // effect already exists
-                deferred.reject('Id  "' + effectParam.id + '" is already taken');
+            if (project) {
+                // username already exists
+                deferred.reject('Project "' + projectParam.title + '" is already taken');
             } else {
-                createEffect();
+                createProject();
             }
         });
 
-    function createEffect() {
+    function createProject() {
 
-        effectsDb.insert(
-            effectParam,
+        projectsDB.insert(
+            projectParam,
             function (err, doc) {
                 if (err) deferred.reject(err);
+
                 deferred.resolve();
             });
     }
+
     return deferred.promise;
 }
 
@@ -90,13 +84,13 @@ function update(_id, userParam) {
     var deferred = Q.defer();
 
     // validation
-    usersDb.findById(_id, function (err, user) {
+    projectsDB.findById(_id, function (err, user) {
         if (err) deferred.reject(err);
 
         if (user.username !== userParam.username) {
             // username has changed so check if the new username is already taken
-            usersDb.findOne(
-                { username: userParam.username },
+            projectsDB.findOne(
+                {username: userParam.username},
                 function (err, user) {
                     if (err) deferred.reject(err);
 
@@ -125,9 +119,9 @@ function update(_id, userParam) {
             set.hash = bcrypt.hashSync(userParam.password, 10);
         }
 
-        usersDb.findAndModify(
-            { _id: _id },
-            { $set: set },
+        projectsDB.findAndModify(
+            {_id: _id},
+            {$set: set},
             function (err, doc) {
                 if (err) deferred.reject(err);
 
@@ -141,13 +135,14 @@ function update(_id, userParam) {
 function _delete(_id) {
     var deferred = Q.defer();
 
-    usersDb.remove(
-        { _id: _id },
+    projectsDB.remove(
+        {_id: _id},
         function (err) {
             if (err) deferred.reject(err);
 
             deferred.resolve();
         });
+
 
     return deferred.promise;
 }
