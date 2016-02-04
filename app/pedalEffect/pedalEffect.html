@@ -58,25 +58,27 @@
             </select>
         </form>
 
-    </div>
-    <label>{{vm.chartViewModel.getSelectedNodes()[0].data.name}}</label>
-    <div class="box off"style=" width: 250px; height:auto;"
-         ng-hide="vm.chartViewModel.getSelectedNodes().length == 0 &&
-          vm.chartViewModel.getSelectedConnections().length == 0" ng-animate="'box'">
-        <div>
-            <div ng-repeat="parameter in vm.chartViewModel.getSelectedNodes()[0].data.parameters">
-                <label>{{parameter.name}}</label>
-                <rzslider rz-slider-model="parameter.value" rz-slider-options="parameter.options"></rzslider>
-            </div>
-        </div>
-    </div>
-
     <figure class="highlight">
     <!--
     This custom element defines the flowchart.
     -->
         <flow-chart
+                class="jumbotron"
                 chart="vm.chartViewModel">
         </flow-chart>
-</figure>
+    </figure>
+
+    </div>
+    <label>{{vm.chartViewModel.getSelectedNodes()[0].data.name}}</label>
+    <div class="box off"style=" width: 300px; height:auto;"
+         ng-hide="vm.chartViewModel.getSelectedNodes().length == 0 &&
+          vm.chartViewModel.getSelectedConnections().length == 0" ng-animate="'box'">
+        <div>
+            <div ng-repeat="parameter in vm.chartViewModel.getSelectedNodes()[0].data.parameters">
+                <label>{{parameter.name}}</label>
+                <rzslider rz-slider-model="parameter.value" rz-slider-options="parameter.options" ></rzslider>
+            </div>
+        </div>
+    </div>
+
 </div>
