@@ -49,6 +49,7 @@
             Stop sound
         </button>
     </div>
+
     <div>
         <form name="myForm" class="btn btn-secondary" >
             <label for="repeatSelect"> Select effect: </label>
@@ -58,8 +59,17 @@
         </form>
 
     </div>
-    
-    <div class="box off" ng-hide="vm.chartViewModel.getSelectedNodes().length == 0 && vm.chartViewModel.getSelectedConnections().length == 0" ng-animate="'box'">Off</div>
+    <label>{{vm.chartViewModel.getSelectedNodes()[0].data.name}}</label>
+    <div class="box off"style=" width: 250px; height:auto;"
+         ng-hide="vm.chartViewModel.getSelectedNodes().length == 0 &&
+          vm.chartViewModel.getSelectedConnections().length == 0" ng-animate="'box'">
+        <div>
+            <div ng-repeat="parameter in vm.chartViewModel.getSelectedNodes()[0].data.parameters">
+                <label>{{parameter.name}}</label>
+                <rzslider rz-slider-model="parameter.value" rz-slider-options="parameter.options"></rzslider>
+            </div>
+        </div>
+    </div>
 
     <figure class="highlight">
     <!--
