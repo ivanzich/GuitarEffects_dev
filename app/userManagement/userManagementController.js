@@ -39,6 +39,7 @@
             UserService.Delete(id)
                 .then(function () {
                     // log user out
+                    initController();
                     if (redirect)
                         $window.location = '/login';
 
