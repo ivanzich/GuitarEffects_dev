@@ -4,7 +4,7 @@
     angular
         .module('app')
         .controller('PedalEffectController', Controller);
-
+    Controller.$inject= []
     function Controller() {
 
 

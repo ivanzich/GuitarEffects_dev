@@ -111,7 +111,7 @@
             }
             effetArray[i+1].connect(destination);
         }
-        
+
 
         function makeDistortionCurve(amount) {
             var k = typeof amount === 'number' ? amount : 50,

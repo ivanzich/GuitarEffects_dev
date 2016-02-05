@@ -23,6 +23,7 @@
     "angularjs-scroll-glue": "~0.0.1",
     "angular-bootstrap-simple-chat": "~0.4.0",
     "lodash": "~4.0.1",
-    "angular-mocks": "^1.4.9"
+    "angular-mocks": "^1.4.9",
+    "nya-bootstrap-select": "^2.1.3"
   }
 }

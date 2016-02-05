@@ -5,13 +5,8 @@
 
 
     <div class="btn-group">
-        <button
-                class="btn btn-primary"
-                ng-click="vm.addNewNode()"
-                title="Add a new node to the chart"
-        >
-            Add Node
-        </button>
+
+
         <button
                 class="btn btn-primary"
                 ng-click="vm.addNewInputConnector()"
@@ -48,15 +43,20 @@
                 title="Stop sound">
             Stop sound
         </button>
+        <ol class="nya-bs-select"
+            name="repeatSelect" id="repeatSelect"
+            title="Select an effect"
+            ng-model="vm.data.repeatSelect" ng-change="vm.addNewNode(vm.data.repeatSelect)" data-live-search="true">
+            <li nya-bs-option="option in vm.data.availableOptions" data-value="option.id">
+                <!-- the text content of anchor element will be used for search -->
+                <a>
+                    {{option.name}}
+                </a>
+            </li>
+        </ol>
     </div>
 
-    <div>
-        <form name="myForm" class="btn btn-secondary" >
-            <label for="repeatSelect"> Select effect: </label>
-            <select name="repeatSelect" id="repeatSelect" ng-model="vm.data.repeatSelect" ng-change="vm.addNewNode(vm.data.repeatSelect)">
-                <option ng-repeat="option in vm.data.availableOptions" value="{{option.id}}">{{option.name}}</option>
-            </select>
-        </form>
+
 
     <figure class="highlight">
     <!--
@@ -68,8 +68,8 @@
         </flow-chart>
     </figure>
 
-    </div>
-    <label>{{vm.chartViewModel.getSelectedNodes()[0].data.name}}</label>
+
+    <h1>{{vm.chartViewModel.getSelectedNodes()[0].data.name}}</h1>
     <div class="box off"style=" width: 300px; height:auto;"
          ng-hide="vm.chartViewModel.getSelectedNodes().length == 0 &&
           vm.chartViewModel.getSelectedConnections().length == 0" ng-animate="'box'">

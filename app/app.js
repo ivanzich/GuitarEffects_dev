@@ -8,6 +8,7 @@
             'ngDragDrop',
             'irontec.simpleChat',
             'flowChart',
+            'nya.bootstrap.select',
             'rzModule'
         ])
         .config(config)
