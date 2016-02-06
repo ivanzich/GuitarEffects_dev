@@ -4,8 +4,9 @@
     angular
         .module('app')
         .controller('PedalEffectController', Controller);
-    Controller.$inject= []
-    function Controller() {
+
+
+    function Controller($window,ProjectService, FlashService) {
 
 
         //
@@ -43,7 +44,7 @@
         // Setup the data-model for the chart.
         //
         var chartDataModel = {
-
+            title : "Test Project 2",
             nodes: [
                 {
                     name: "Input",
@@ -152,6 +153,18 @@
         vm.startSound = startSound;
         vm.stopSound = stopSound;
         vm.playSoundWithEffect= playSoundWithEffect;
+        vm.saveProject = saveProject;
+
+
+        function saveProject(){
+            ProjectService.Create(vm.chartViewModel.data)
+                .then(function () {
+                    FlashService.Success('Project created');
+                })
+                .catch(function (error) {
+                    FlashService.Error(error);
+                });
+        }
 
 
         initController();
@@ -790,6 +803,24 @@
 
             return delayNodeChorus;
         }
+    }
+
+
+    function convertForJson(obj){
+        obj.myself = obj;
+
+        var seen = [];
+
+        var json = JSON.stringify(obj, function(key, val) {
+            if (typeof val == "object") {
+                if (seen.indexOf(val) >= 0)
+                    return
+                seen.push(val)
+            }
+            return val
+        })
+        return json
+
     }
 
 })();
