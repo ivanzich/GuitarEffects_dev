@@ -29,7 +29,7 @@ function registerProject(req, res) {
 }
 
 function getProject(req, res) {
-    projectService.getById(req.effect.sub)
+    projectService.getById(req.params.id)
         .then(function (effect) {
             if (effect) {
                 res.send(effect);
@@ -43,6 +43,7 @@ function getProject(req, res) {
 }
 
 function getListProjects(req, res) {
+
     projectService.getProjectList()
         .then(function (effect) {
             if (effect) {

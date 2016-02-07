@@ -18,12 +18,13 @@
 <body class="container">
     <!-- header -->
     <header>
+
         <ul class="nav nav-tabs">
             <li ng-class="{active: activeTab === 'home'}"><a ui-sref="home">Home</a></li>
             <li ng-class="{active: activeTab === 'account'}"><a ui-sref="account">My Account</a></li>
-            <li ng-class="{active: activeTab === 'pedalEffect'}"><a ui-sref="pedalEffect">Pedal Effect</a></li>
+            <li ng-class="{active: activeTab === 'pedalEffect'}"><a ui-sref="pedalEffect" ui-sref-active="active">Pedal Effect</a></li>
             <li ng-class="{active: activeTab === 'usermanagement'}"><a ui-sref="usermanagement">User Management</a></li>
-            <li ng-class="{active: activeTab === 'musicplayer'}"><a ui-sref="musicplayer">Music Player</a></li>
+            <li ng-class="{active: activeTab === 'musicplayer'}"><a ui-sref="musicplayer" ui-sref-active="active" >Music Player</a></li>
             <li ng-class="{active: activeTab === 'chat'}"><a ui-sref="chat">Chat</a></li>
             <li ng-class="{active: activeTab === 'effect'}"><a ui-sref="effect">Test Effect</a></li>
             <li><a href="/login" target="_self">Logout</a></li>

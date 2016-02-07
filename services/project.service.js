@@ -13,6 +13,7 @@ var service = {};
 service.create = create;
 service.update = update;
 service.delete = _delete;
+service.getById = getById;
 service.getProjectList = getProjectList;
 
 module.exports = service;

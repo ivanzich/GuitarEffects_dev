@@ -6,7 +6,7 @@
         .controller('PedalEffectController', Controller);
 
 
-    function Controller($window,ProjectService, FlashService) {
+    function Controller($window,ProjectService, FlashService,$stateParams) {
 
 
         //
@@ -142,6 +142,9 @@
 
         var vm = this;
 
+        vm.id= $stateParams.partyID;
+
+
         vm.toggle = true;
         vm.keyDown = keyDown;
         vm.keyUp = keyUp;
@@ -171,6 +174,17 @@
         // Step 1 - Initialise the Audio Context
         // There can be only one!
         function initController() {
+
+            console.log(vm.id);
+            ProjectService.GetById(vm.id)
+                .then(function(project){
+                    //vm.chartViewModel = new flowchart.ChartViewModel(chartDataModel);
+                    console.log(project);
+                })
+                .catch(function(error){
+                FlashService.Error(error);
+            });
+
             if (typeof AudioContext !== "undefined") {
                 context = new AudioContext();
             } else if (typeof webkitAudioContext !== "undefined") {

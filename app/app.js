@@ -40,6 +40,13 @@
                 controllerAs: 'vm',
                 data: {activeTab: 'pedalEffect'}
             })
+            .state('pedalEffectDetail', {
+                url: '/pedalEffect/:partyID',
+                templateUrl: 'pedalEffect/pedalEffect.html',
+                controller: 'PedalEffectController',
+                controllerAs: 'vm',
+                data: {activeTab: 'pedalEffect'}
+            })
             .state('usermanagement', {
                 url: '/usermanagement',
                 templateUrl: 'userManagement/userManagement.html',
