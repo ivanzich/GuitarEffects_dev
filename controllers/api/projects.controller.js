@@ -21,7 +21,9 @@ function registerProject(req, res) {
     projectService.create(req.body)
         .then(function () {
             log.info(req.body.id +' has been created');
-            res.sendStatus(200);
+            console.log(req.body._id);
+            res.send(req.body._id);
+            //res.sendStatus(200);
         })
         .catch(function (err) {
             res.status(400).send(err);

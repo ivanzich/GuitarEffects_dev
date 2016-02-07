@@ -44,7 +44,7 @@
         // Setup the data-model for the chart.
         //
         var chartDataModel = {
-            title : "Test Project 2",
+            title : "Test Project 3",
             nodes: [
                 {
                     name: "Input",
@@ -152,23 +152,48 @@
         vm.addNewInputConnector = addNewInputConnector;
         vm.addNewOutputConnector = addNewOutputConnector;
         vm.deleteSelected = deleteSelected;
-        vm.chartViewModel = new flowchart.ChartViewModel(chartDataModel);
+        vm.chartViewModel = null;
         vm.startSound = startSound;
         vm.stopSound = stopSound;
         vm.playSoundWithEffect= playSoundWithEffect;
         vm.saveProject = saveProject;
+        vm.updateProject = updateProject;
 
 
         function saveProject(){
+
+            var projectName = prompt("Enter a project name:", "Title");
+            if (!projectName) {
+                return;
+            }
+
+            vm.chartViewModel.data.title = projectName;
+            delete(vm.chartViewModel.data._id);
+
+
             ProjectService.Create(vm.chartViewModel.data)
-                .then(function () {
+                .then(function (project) {
+
+                    vm.chartViewModel.data._id=project;
+                    console.log(vm.chartViewModel.data);
                     FlashService.Success('Project created');
+
+                })
+                .catch(function (error) {
+                    FlashService.Error(error);
+                });
+
+        }
+        function updateProject(){
+            ProjectService.Update(vm.chartViewModel.data)
+                .then(function () {
+                    FlashService.Success('Project updated');
+
                 })
                 .catch(function (error) {
                     FlashService.Error(error);
                 });
         }
-
 
         initController();
         // Step 1 - Initialise the Audio Context
@@ -178,11 +203,12 @@
             console.log(vm.id);
             ProjectService.GetById(vm.id)
                 .then(function(project){
-                    //vm.chartViewModel = new flowchart.ChartViewModel(chartDataModel);
+                    vm.chartViewModel = new flowchart.ChartViewModel(project);
                     console.log(project);
                 })
                 .catch(function(error){
-                FlashService.Error(error);
+                    vm.chartViewModel = new flowchart.ChartViewModel(chartDataModel);
+                //FlashService.Error(error);
             });
 
             if (typeof AudioContext !== "undefined") {
@@ -446,6 +472,7 @@
         // Add a new node to the chart.
         //
         function addNewNode(id) {
+
             var option = (!id) ? null : vm.data.availableOptions.filter(function (option) {
                 return (option.id === id);
             })[0];
