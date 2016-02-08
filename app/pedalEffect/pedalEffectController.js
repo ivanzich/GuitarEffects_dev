@@ -299,6 +299,7 @@
         vm.playSoundWithEffect= playSoundWithEffect;
         vm.saveProject = saveProject;
         vm.updateProject = updateProject;
+        vm.addNewProjectChartViewModel =  addNewProjectChartViewModel;
 
 
         function saveProject(){
@@ -613,7 +614,6 @@
         // Add a new node to the chart.
         //
         function addNewNode(id) {
-
             var option = (!id) ? null : vm.data.availableOptions.filter(function (option) {
                 return (option.id === id);
             })[0];
@@ -663,6 +663,151 @@
             vm.chartViewModel.addNode(newNodeDataModel);
         };
 
+        function addNewProjectChartViewModel(){
+            var newModel = {
+                name: 'Test Project 3',
+                id: nextNodeID++,
+                x: 0,
+                y: 0,
+                inputConnectors: [
+                    {
+                        name: " "
+                    }
+                ],
+                outputConnectors: [
+                    {
+                        name: " "
+                    }
+                ],
+                dataProject:{
+                    title : "Test Project 3",
+                    nodes: [
+                        {
+                            name: "Input",
+                            id: 0,
+                            x: 0,
+                            y: 0,
+                            width: 150,
+                            inputConnectors: [],
+                            outputConnectors: [
+                                {
+                                    name: " ",
+                                },
+
+                            ],
+                        },
+                        {
+                            name: 'Distortion',
+                            id: 2,
+                            x: 250,
+                            y: 300,
+                            inputConnectors: [
+                                {
+                                    name: "X"
+                                }
+                            ],
+                            outputConnectors: [
+                                {
+                                    name: "1"
+                                }
+                            ],
+                            parameters:[
+                                {
+                                    name: 'Amount',
+                                    value: 400,
+                                    options: {
+                                        floor: 0,
+                                        ceil: 1000
+                                    }
+                                },
+                                {
+                                    name:'n_sample',
+                                    value: 44100,
+                                    options: {
+                                        floor: 0,
+                                        ceil: 100000
+                                    }
+                                }
+                            ]
+
+                        },
+                        {
+                            name: 'Distortion',
+                            id: 4,
+                            x: 200,
+                            y: 400,
+                            inputConnectors: [
+                                {
+                                    name: "X"
+                                }
+                            ],
+                            outputConnectors: [
+                                {
+                                    name: "1"
+                                }
+                            ],
+                            parameters:[
+                                {
+                                    name: 'Amount',
+                                    value: 400,
+                                    options: {
+                                        floor: 0,
+                                        ceil: 1000
+                                    }
+                                },
+                                {
+                                    name:'n_sample',
+                                    value: 44100,
+                                    options: {
+                                        floor: 0,
+                                        ceil: 100000
+                                    }
+                                }
+                            ]
+
+                        },
+                        {
+                            name: "Output",
+                            id: 1,
+                            x: 0,
+                            y: 200,
+                            width: 150,
+                            inputConnectors: [
+                                {
+                                    name: " ",
+                                },
+                            ],
+                            outputConnectors: [],
+                        }
+                    ],
+
+                    connections: [{
+                        "source": {
+                            "nodeID": 0,
+                            "connectorIndex": 0
+                        },
+                        "dest": {
+                            "nodeID": 2,
+                            "connectorIndex": 0
+                        }
+                    },
+                        {
+                            "source": {
+                                "nodeID": 2,
+                                "connectorIndex": 0
+                            },
+                            "dest": {
+                                "nodeID": 1,
+                                "connectorIndex": 0
+                            }
+                        }
+
+                    ]
+                }
+            };
+
+            vm.chartViewModel.addNode(newModel);
+        }
 
         //
         // Add an input connector to selected nodes.
