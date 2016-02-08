@@ -60,13 +60,11 @@ function getListProjects(req, res) {
 }
 
 function updateEffect(req, res) {
-    var userId = req.user.sub;
-    if (req.params._id !== userId) {
-        // can only update own account
-        return res.status(401).send('You can only update your own effect');
-    }
 
-    projectService.update(userId, req.body)
+    console.log(req.params);
+    console.log(res);
+
+    projectService.update(req.params._id, req.body)
         .then(function () {
             log.info(req.user.username +'\'s account has been updated');
             res.sendStatus(200);
@@ -77,15 +75,16 @@ function updateEffect(req, res) {
 }
 
 function deleteEffect(req, res) {
-    var userId = req.user.sub;
+
+    /*
     if (req.params._id !== userId) {
         // can only delete own account
         return res.status(401).send('You can only delete your own effect');
-    }
+    }*/
 
-    projectService.delete(userId)
+    projectService.delete(req.params._id)
         .then(function () {
-            log.info(req.user.username +'\'s effect has been deleted');
+            log.info(req.params._id +'\'s effect has been deleted');
             res.sendStatus(200);
         })
         .catch(function (err) {

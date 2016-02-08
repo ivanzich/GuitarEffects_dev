@@ -81,44 +81,24 @@ function create(projectParam) {
     return deferred.promise;
 }
 
-function update(_id, userParam) {
+function update(_id, projectParam) {
     var deferred = Q.defer();
 
     // validation
-    projectsDB.findById(_id, function (err, user) {
+    projectsDB.findById(_id, function (err, project) {
         if (err) deferred.reject(err);
+        projectsDB.findOne(
+                {title: projectParam.title},
+                updateUser());
 
-        if (user.username !== userParam.username) {
-            // username has changed so check if the new username is already taken
-            projectsDB.findOne(
-                {username: userParam.username},
-                function (err, user) {
-                    if (err) deferred.reject(err);
-
-                    if (user) {
-                        // username already exists
-                        deferred.reject('Username "' + req.body.username + '" is already taken')
-                    } else {
-                        updateUser();
-                    }
-                });
-        } else {
-            updateUser();
-        }
     });
 
     function updateUser() {
         // fields to update
         var set = {
-            firstName: userParam.firstName,
-            lastName: userParam.lastName,
-            username: userParam.username,
+            nodes: projectParam.nodes,
+            connections: projectParam.connections
         };
-
-        // update password if it was entered
-        if (userParam.password) {
-            set.hash = bcrypt.hashSync(userParam.password, 10);
-        }
 
         projectsDB.findAndModify(
             {_id: _id},
