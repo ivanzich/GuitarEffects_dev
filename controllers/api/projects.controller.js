@@ -20,7 +20,7 @@ module.exports = router;
 function registerProject(req, res) {
     projectService.create(req.body)
         .then(function () {
-            log.info(req.body.id +' has been created');
+            log.info(req.body.title +' has been created');
             console.log(req.body._id);
             res.send(req.body._id);
             //res.sendStatus(200);
@@ -66,7 +66,7 @@ function updateEffect(req, res) {
 
     projectService.update(req.params._id, req.body)
         .then(function () {
-            log.info(req.user.username +'\'s account has been updated');
+            log.info(req.body.title +'\'s account has been updated');
             res.sendStatus(200);
         })
         .catch(function (err) {

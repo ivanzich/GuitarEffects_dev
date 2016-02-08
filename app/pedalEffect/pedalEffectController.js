@@ -96,6 +96,147 @@
 
                 },
                 {
+                    name: 'Test Project 3',
+                    id: 4,
+                    x: 200,
+                    y: 400,
+                    inputConnectors: [
+                        {
+                            name: " "
+                        }
+                    ],
+                    outputConnectors: [
+                        {
+                            name: " "
+                        }
+                    ],
+                    dataProject:{
+                        title : "Test Project 3",
+                        nodes: [
+                            {
+                                name: "Input",
+                                id: 0,
+                                x: 0,
+                                y: 0,
+                                width: 150,
+                                inputConnectors: [],
+                                outputConnectors: [
+                                    {
+                                        name: " ",
+                                    },
+
+                                ],
+                            },
+                            {
+                                name: 'Distortion',
+                                id: 2,
+                                x: 250,
+                                y: 300,
+                                inputConnectors: [
+                                    {
+                                        name: "X"
+                                    }
+                                ],
+                                outputConnectors: [
+                                    {
+                                        name: "1"
+                                    }
+                                ],
+                                parameters:[
+                                    {
+                                        name: 'Amount',
+                                        value: 400,
+                                        options: {
+                                            floor: 0,
+                                            ceil: 1000
+                                        }
+                                    },
+                                    {
+                                        name:'n_sample',
+                                        value: 44100,
+                                        options: {
+                                            floor: 0,
+                                            ceil: 100000
+                                        }
+                                    }
+                                ]
+
+                            },
+                            {
+                                name: 'Distortion',
+                                id: 4,
+                                x: 200,
+                                y: 400,
+                                inputConnectors: [
+                                    {
+                                        name: "X"
+                                    }
+                                ],
+                                outputConnectors: [
+                                    {
+                                        name: "1"
+                                    }
+                                ],
+                                parameters:[
+                                    {
+                                        name: 'Amount',
+                                        value: 400,
+                                        options: {
+                                            floor: 0,
+                                            ceil: 1000
+                                        }
+                                    },
+                                    {
+                                        name:'n_sample',
+                                        value: 44100,
+                                        options: {
+                                            floor: 0,
+                                            ceil: 100000
+                                        }
+                                    }
+                                ]
+
+                            },
+                            {
+                                name: "Output",
+                                id: 1,
+                                x: 0,
+                                y: 200,
+                                width: 150,
+                                inputConnectors: [
+                                    {
+                                        name: " ",
+                                    },
+                                ],
+                                outputConnectors: [],
+                            }
+                        ],
+
+                        connections: [{
+                            "source": {
+                                "nodeID": 0,
+                                "connectorIndex": 0
+                            },
+                            "dest": {
+                                "nodeID": 2,
+                                "connectorIndex": 0
+                            }
+                        },
+                            {
+                                "source": {
+                                    "nodeID": 2,
+                                    "connectorIndex": 0
+                                },
+                                "dest": {
+                                    "nodeID": 1,
+                                    "connectorIndex": 0
+                                }
+                            }
+
+                        ]
+                    }
+                },
+                {
                     name: "Output",
                     id: 1,
                     x: 0,
@@ -117,13 +258,13 @@
                     "connectorIndex": 0
                 },
                 "dest": {
-                    "nodeID": 2,
+                    "nodeID": 4,
                     "connectorIndex": 0
                 }
             },
                 {
                     "source": {
-                        "nodeID": 2,
+                        "nodeID": 4,
                         "connectorIndex": 0
                     },
                     "dest": {
@@ -651,19 +792,19 @@
 
         function playSoundWithEffect(source){
 
-            var r = getTheSourceNodes(0,source);
+            var r = getTheSourceNodes(0,source,vm.chartViewModel);
 
             return r;
           //vm.chartViewModel.connections.length  console.log(vm.chartViewModel.connections[0].destnodeID.toString());
             //console.log(vm.chartViewModel.connections[i].dest.nodeID));
 
         }
-        function getTheDestNodes(destNode,source){
+        function getTheDestNodes(destNode,source,model){
             return (destNode == 1) ? source
-            : vm.chartViewModel.nodes.filter(function(node) {
+            : model.nodes.filter(function(node) {
                 return (node.data.id == destNode);
             }).map(function(node) {
-                return getTheSourceNodes(node.data.id, addEffect(node.data, source));
+                return getTheSourceNodes(node.data.id, addEffect(node.data, source),model);
             }).reduce(function(prev, next) {
                 return prev.concat(next);
             }, []).reduce(function(){});
@@ -684,7 +825,7 @@
             //}
 
         }
-        function getTheSourceNodes(sourceNode,source){
+        function getTheSourceNodes(sourceNode,source,model){
 
             //var i=0;
             //for(i=0; i < vm.chartViewModel.connections.length; i++){
@@ -694,10 +835,30 @@
             //        return y;
             //    };
             //}
-            return vm.chartViewModel.connections.filter(function(connection) {
+            return model.connections.filter(function(connection) {
                 return (connection.data.source.nodeID == sourceNode);
             }).map(function(connection) {
-                return getTheDestNodes(connection.data.dest.nodeID,source);
+                return getTheDestNodes(connection.data.dest.nodeID,source,model);
+            }).reduce(function(){});
+        }
+
+        function getTheDestNodesProject(destNode,source,model){
+            return (destNode == 1) ? source
+                : model.nodes.filter(function(node) {
+                return (node.id == destNode);
+            }).map(function(node) {
+                return getTheSourceNodesProject(node.id, addEffect(node, source),model);
+            }).reduce(function(prev, next) {
+                return prev.concat(next);
+            }, []).reduce(function(){});
+
+        }
+        function getTheSourceNodesProject(sourceNode,source,model){
+
+            return model.connections.filter(function(connection) {
+                return (connection.source.nodeID == sourceNode);
+            }).map(function(connection) {
+                return getTheDestNodesProject(connection.dest.nodeID,source,model);
             }).reduce(function(){});
         }
 
@@ -725,6 +886,10 @@
                     break;
                 default :
                     console.log('Default, do nothing');
+                    console.log(vm.chartViewModel.connections[0].data);
+                    console.log(node.dataProject.connections[0]);
+                    getTheSourceNodesProject(0,source,node.dataProject);
+
                     return source;
             }
         }
