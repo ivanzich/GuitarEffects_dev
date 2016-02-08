@@ -57,6 +57,17 @@
                 </a>
             </li>
         </ol>
+        <ol class="nya-bs-select"
+            name="repeatSelect" id="repeatSelect"
+            title="Select an effect"
+            ng-model="vm.data.repeatSelect" ng-change="vm.addNewProjectChartViewModel(vm.data.repeatSelect)" data-live-search="true">
+            <li nya-bs-option="option in vm.projectList" data-value="option._id">
+                <!-- the text content of anchor element will be used for search -->
+                <a>
+                    {{option.title}}
+                </a>
+            </li>
+        </ol>
         <button
                 class="btn btn-primary"
                 ng-click="vm.addNewProjectChartViewModel()"

@@ -40,11 +40,12 @@
         var nextNodeID = 10;
 
 
+
         //
         // Setup the data-model for the chart.
         //
         var chartDataModel = {
-            title : "Test Project 3",
+            title : "write your project name",
             nodes: [
                 {
                     name: "Input",
@@ -61,185 +62,9 @@
                     ],
                 },
                 {
-                    name: 'Distortion',
-                    id: 2,
-                    x: 250,
-                    y: 300,
-                    inputConnectors: [
-                        {
-                            name: "X"
-                        }
-                    ],
-                    outputConnectors: [
-                        {
-                            name: "1"
-                        }
-                    ],
-                    parameters:[
-                        {
-                        name: 'Amount',
-                        value: 400,
-                            options: {
-                                floor: 0,
-                                ceil: 1000
-                            }
-                        },
-                        {
-                        name:'n_sample',
-                            value: 44100,
-                            options: {
-                                floor: 0,
-                                ceil: 100000
-                            }
-                        }
-                    ]
-
-                },
-                {
-                    name: 'Test Project 3',
-                    id: 4,
-                    x: 200,
-                    y: 400,
-                    inputConnectors: [
-                        {
-                            name: " "
-                        }
-                    ],
-                    outputConnectors: [
-                        {
-                            name: " "
-                        }
-                    ],
-                    dataProject:{
-                        title : "Test Project 3",
-                        nodes: [
-                            {
-                                name: "Input",
-                                id: 0,
-                                x: 0,
-                                y: 0,
-                                width: 150,
-                                inputConnectors: [],
-                                outputConnectors: [
-                                    {
-                                        name: " ",
-                                    },
-
-                                ],
-                            },
-                            {
-                                name: 'Distortion',
-                                id: 2,
-                                x: 250,
-                                y: 300,
-                                inputConnectors: [
-                                    {
-                                        name: "X"
-                                    }
-                                ],
-                                outputConnectors: [
-                                    {
-                                        name: "1"
-                                    }
-                                ],
-                                parameters:[
-                                    {
-                                        name: 'Amount',
-                                        value: 400,
-                                        options: {
-                                            floor: 0,
-                                            ceil: 1000
-                                        }
-                                    },
-                                    {
-                                        name:'n_sample',
-                                        value: 44100,
-                                        options: {
-                                            floor: 0,
-                                            ceil: 100000
-                                        }
-                                    }
-                                ]
-
-                            },
-                            {
-                                name: 'Distortion',
-                                id: 4,
-                                x: 200,
-                                y: 400,
-                                inputConnectors: [
-                                    {
-                                        name: "X"
-                                    }
-                                ],
-                                outputConnectors: [
-                                    {
-                                        name: "1"
-                                    }
-                                ],
-                                parameters:[
-                                    {
-                                        name: 'Amount',
-                                        value: 400,
-                                        options: {
-                                            floor: 0,
-                                            ceil: 1000
-                                        }
-                                    },
-                                    {
-                                        name:'n_sample',
-                                        value: 44100,
-                                        options: {
-                                            floor: 0,
-                                            ceil: 100000
-                                        }
-                                    }
-                                ]
-
-                            },
-                            {
-                                name: "Output",
-                                id: 1,
-                                x: 0,
-                                y: 200,
-                                width: 150,
-                                inputConnectors: [
-                                    {
-                                        name: " ",
-                                    },
-                                ],
-                                outputConnectors: [],
-                            }
-                        ],
-
-                        connections: [{
-                            "source": {
-                                "nodeID": 0,
-                                "connectorIndex": 0
-                            },
-                            "dest": {
-                                "nodeID": 2,
-                                "connectorIndex": 0
-                            }
-                        },
-                            {
-                                "source": {
-                                    "nodeID": 2,
-                                    "connectorIndex": 0
-                                },
-                                "dest": {
-                                    "nodeID": 1,
-                                    "connectorIndex": 0
-                                }
-                            }
-
-                        ]
-                    }
-                },
-                {
                     name: "Output",
                     id: 1,
-                    x: 0,
+                    x: 200,
                     y: 200,
                     width: 150,
                     inputConnectors: [
@@ -252,28 +77,7 @@
 
             ],
 
-            connections: [{
-                "source": {
-                    "nodeID": 0,
-                    "connectorIndex": 0
-                },
-                "dest": {
-                    "nodeID": 4,
-                    "connectorIndex": 0
-                }
-            },
-                {
-                    "source": {
-                        "nodeID": 4,
-                        "connectorIndex": 0
-                    },
-                    "dest": {
-                        "nodeID": 1,
-                        "connectorIndex": 0
-                    }
-                }
-
-            ]
+            connections: []
         };
         var context,
             soundSource,
@@ -285,7 +89,7 @@
 
         vm.id= $stateParams.partyID;
 
-
+        vm.selectedModel=null;
         vm.toggle = true;
         vm.keyDown = keyDown;
         vm.keyUp = keyUp;
@@ -300,6 +104,7 @@
         vm.saveProject = saveProject;
         vm.updateProject = updateProject;
         vm.addNewProjectChartViewModel =  addNewProjectChartViewModel;
+        vm.projectList = null;
 
 
         function saveProject(){
@@ -341,6 +146,14 @@
         // Step 1 - Initialise the Audio Context
         // There can be only one!
         function initController() {
+
+            ProjectService.GetProjectList()
+                .then(function (projectList) {
+                    vm.projectList = projectList;
+                })
+                .catch(function (error) {
+                    FlashService.Error(error);
+                });
 
             console.log(vm.id);
             ProjectService.GetById(vm.id)
@@ -663,150 +476,36 @@
             vm.chartViewModel.addNode(newNodeDataModel);
         };
 
-        function addNewProjectChartViewModel(){
-            var newModel = {
-                name: 'Test Project 3',
-                id: nextNodeID++,
-                x: 0,
-                y: 0,
-                inputConnectors: [
-                    {
-                        name: " "
-                    }
-                ],
-                outputConnectors: [
-                    {
-                        name: " "
-                    }
-                ],
-                dataProject:{
-                    title : "Test Project 3",
-                    nodes: [
-                        {
-                            name: "Input",
-                            id: 0,
-                            x: 0,
-                            y: 0,
-                            width: 150,
-                            inputConnectors: [],
-                            outputConnectors: [
-                                {
-                                    name: " ",
-                                },
+        function addNewProjectChartViewModel(id){
 
-                            ],
-                        },
-                        {
-                            name: 'Distortion',
-                            id: 2,
-                            x: 250,
-                            y: 300,
-                            inputConnectors: [
-                                {
-                                    name: "X"
-                                }
-                            ],
-                            outputConnectors: [
-                                {
-                                    name: "1"
-                                }
-                            ],
-                            parameters:[
-                                {
-                                    name: 'Amount',
-                                    value: 400,
-                                    options: {
-                                        floor: 0,
-                                        ceil: 1000
-                                    }
-                                },
-                                {
-                                    name:'n_sample',
-                                    value: 44100,
-                                    options: {
-                                        floor: 0,
-                                        ceil: 100000
-                                    }
-                                }
-                            ]
+            vm.data.repeatSelect = null;
 
-                        },
-                        {
-                            name: 'Distortion',
-                            id: 4,
-                            x: 200,
-                            y: 400,
-                            inputConnectors: [
-                                {
-                                    name: "X"
-                                }
-                            ],
-                            outputConnectors: [
-                                {
-                                    name: "1"
-                                }
-                            ],
-                            parameters:[
-                                {
-                                    name: 'Amount',
-                                    value: 400,
-                                    options: {
-                                        floor: 0,
-                                        ceil: 1000
-                                    }
-                                },
-                                {
-                                    name:'n_sample',
-                                    value: 44100,
-                                    options: {
-                                        floor: 0,
-                                        ceil: 100000
-                                    }
-                                }
-                            ]
-
-                        },
-                        {
-                            name: "Output",
-                            id: 1,
-                            x: 0,
-                            y: 200,
-                            width: 150,
-                            inputConnectors: [
-                                {
-                                    name: " ",
-                                },
-                            ],
-                            outputConnectors: [],
-                        }
-                    ],
-
-                    connections: [{
-                        "source": {
-                            "nodeID": 0,
-                            "connectorIndex": 0
-                        },
-                        "dest": {
-                            "nodeID": 2,
-                            "connectorIndex": 0
-                        }
-                    },
-                        {
-                            "source": {
-                                "nodeID": 2,
-                                "connectorIndex": 0
-                            },
-                            "dest": {
-                                "nodeID": 1,
-                                "connectorIndex": 0
+            ProjectService.GetById(id)
+                .then(function(project){
+                    console.log(project);
+                    var newModel = {
+                        name : project.title,
+                        id: nextNodeID++,
+                        x:0,
+                        y:0,
+                        inputConnectors: [
+                            {
+                                name: " "
                             }
-                        }
+                        ],
+                        outputConnectors: [
+                            {
+                                name: " "
+                            }
+                        ],
+                        dataProject: project
+                    }
+                    vm.chartViewModel.addNode(newModel);
+                })
+                .catch(function(error){
+                    FlashService.Error(error);
+                });
 
-                    ]
-                }
-            };
-
-            vm.chartViewModel.addNode(newModel);
         }
 
         //
