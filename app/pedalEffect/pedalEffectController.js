@@ -732,9 +732,8 @@
                     console.log('Default, do nothing');
                     console.log(vm.chartViewModel.connections[0].data);
                     console.log(node.dataProject.connections[0]);
-                    getTheSourceNodesProject(0,source,node.dataProject);
+                    return getTheSourceNodesProject(0,source,node.dataProject);
 
-                    return source;
             }
         }
 
