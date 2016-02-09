@@ -5,11 +5,10 @@
     angular
         .module('app', [
             'ui.router',
-            'ngDragDrop',
-            'irontec.simpleChat',
             'flowChart',
             'nya.bootstrap.select',
-            'rzModule'
+            'rzModule',
+            'guitareffect.account'
         ])
         .config(config)
         .run(run);
@@ -28,8 +27,8 @@
             })
             .state('account', {
                 url: '/account',
-                templateUrl: 'account/index.html',
-                controller: 'Account.IndexController',
+                templateUrl: 'account/account.html',
+                controller: 'AccountController',
                 controllerAs: 'vm',
                 data: {activeTab: 'account'}
             })

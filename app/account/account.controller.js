@@ -2,8 +2,8 @@
     'use strict';
 
     angular
-        .module('app')
-        .controller('Account.IndexController', Controller);
+        .module('guitareffect.account')
+        .controller('AccountController', Controller);
 
     function Controller($window, UserService, FlashService) {
         var vm = this;
