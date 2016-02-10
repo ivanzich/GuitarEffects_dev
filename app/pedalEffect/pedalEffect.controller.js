@@ -6,7 +6,7 @@
         .controller('PedalEffectController', Controller);
 
 
-    function Controller($window,ProjectService, FlashService,$stateParams) {
+    function Controller(ProjectService, FlashService,$stateParams,PedalEffectService,PEDAL_EFFECT_CONSTANT) {
 
 
         //
@@ -44,41 +44,7 @@
         //
         // Setup the data-model for the chart.
         //
-        var chartDataModel = {
-            title : "write your project name",
-            nodes: [
-                {
-                    name: "Input",
-                    id: 0,
-                    x: 0,
-                    y: 0,
-                    width: 150,
-                    inputConnectors: [],
-                    outputConnectors: [
-                        {
-                            name: " ",
-                        },
-
-                    ],
-                },
-                {
-                    name: "Output",
-                    id: 1,
-                    x: 200,
-                    y: 200,
-                    width: 150,
-                    inputConnectors: [
-                        {
-                            name: " ",
-                        },
-                    ],
-                    outputConnectors: [],
-                },
-
-            ],
-
-            connections: []
-        };
+        var chartDataModel = angular.copy(PEDAL_EFFECT_CONSTANT.chartDataModel);
         var context,
             soundSource,
             soundBuffer,
@@ -87,7 +53,6 @@
 
         var vm = this;
 
-        vm.id= $stateParams.partyID;
 
         vm.selectedModel=null;
         vm.toggle = true;
@@ -113,7 +78,6 @@
             if (!projectName) {
                 return;
             }
-
             vm.chartViewModel.data.title = projectName;
             delete(vm.chartViewModel.data._id);
 
@@ -155,16 +119,21 @@
                     FlashService.Error(error);
                 });
 
-            console.log(vm.id);
-            ProjectService.GetById(vm.id)
-                .then(function(project){
-                    vm.chartViewModel = new flowchart.ChartViewModel(project);
-                    console.log(project);
-                })
-                .catch(function(error){
-                    vm.chartViewModel = new flowchart.ChartViewModel(chartDataModel);
-                //FlashService.Error(error);
-            });
+            if($stateParams.partyID) {
+                ProjectService.GetById($stateParams.partyID)
+                    .then(function (project) {
+                        vm.chartViewModel = new flowchart.ChartViewModel(project);
+                        nextNodeID = angular.copy(project.nodes.sort(function(x, y) {
+                            return x.id < y.id;
+                        })[0].id);
+                        nextNodeID++;
+                    })
+                    .catch(function (error) {
+                        FlashService.Error(error);
+                    });
+            }else {
+                vm.chartViewModel = new flowchart.ChartViewModel(chartDataModel);
+            }
 
             if (typeof AudioContext !== "undefined") {
                 context = new AudioContext();
@@ -175,208 +144,10 @@
             }
         }
 
-        vm.data = {
-            repeatSelect: null,
-            availableOptions: [
-                {
-                    id: '0', name: 'Distortion',
-                    node: {
-                        name: 'Distortion',
-                        id: nextNodeID++,
-                        x: 0,
-                        y: 0,
-                        inputConnectors: [
-                            {
-                                name: " "
-                            }
-                        ],
-                        outputConnectors: [
-                            {
-                                name: " "
-                            }
-                        ],
-                        parameters:[
-                            {
-                                name: 'Amount',
-                                value: 400,
-                                options: {
-                                    floor: 0,
-                                    ceil: 1000
-                                }
-                            },
-                            {
-                                name:'n_sample',
-                                value: 44100,
-                                options: {
-                                    floor: 0,
-                                    ceil: 100000,
-                                    step:10,
-                                    precision:1
-                                }
-                            }
-                        ]
-                    }
-                },
-                {
-                    id: '5', name: 'Filter',
-                    node: {
-                        name: 'Filter',
-                        id: nextNodeID++,
-                        x: 0,
-                        y: 0,
-                        inputConnectors: [
-                            {
-                                name: " "
-                            }
-                        ],
-                        outputConnectors: [
-                            {
-                                name: " "
-                            }
-                        ],
-                        parameters:[
-                            {
-                                name: 'Frequency',
-                                value: 200,
-                                options: {
-                                    floor: 0,
-                                    ceil: 1000000,
-                                    step: 100,
-                                    precision:1
-                                }
-                            }
-                        ]
-                    }
-                },
-                {
-                    id: '25', name: 'Delay',
-                    node: {
-                        name: 'Delay',
-                        id: nextNodeID++,
-                        x: 0,
-                        y: 0,
-                        inputConnectors: [
-                            {
-                                name: " "
-                            }
-                        ],
-                        outputConnectors: [
-                            {
-                                name: " "
-                            },
-                            {
-                                name: " "
-                            }
-                        ],
-                        parameters:[
-                            {
-                                name: 'Time',
-                                value: 5,
-                                options: {
-                                    floor: 0,
-                                    ceil: 100
-                                }
-                            },
-                            {
-                                name: 'Frequency',
-                                value: 400,
-                                options: {
-                                    floor: 0,
-                                    ceil: 1000000,
-                                    step: 100,
-                                    precision:1
-                                }
-                            }
-                        ]
-                    }
-                },
-                {
-                    id: '3', name: 'Chorus',
-                    node: {
-                        name: 'Chorus',
-                        id: nextNodeID++,
-                        x: 0,
-                        y: 0,
-                        inputConnectors: [
-                            {
-                                name: " "
-                            }
-                        ],
-                        outputConnectors: [
-                            {
-                                name: " "
-                            },
-                            {
-                                name: " "
-                            }
-                        ],
-                        parameters:[
-                            {
-                                name: 'Time Node',
-                                value: 0.5,
-                                options: {
-                                    floor: 0,
-                                    ceil: 1,
-                                    step: 0.1,
-                                    precision:1
-                                }
-                            },
-                            {
-                                name: 'Time Gain',
-                                value: 0.5,
-                                options: {
-                                    floor: 0,
-                                    ceil: 1,
-                                    step: 0.1,
-                                    precision:1
-                                }
-                            }
-                            ,
-                            {
-                                name: 'Frequency',
-                                value: 20,
-                                options: {
-                                    floor: 0,
-                                    ceil: 100
-                                }
-                            }
-                        ]
-                    }
-                },
-                {
-                    id: '4', name: 'Gain LFO',
-                    node: {
-                        name: 'Gain LFO',
-                        id: nextNodeID++,
-                        x: 0,
-                        y: 0,
-                        inputConnectors: [
-                            {
-                                name: " "
-                            }
-                        ],
-                        outputConnectors: [
-                            {
-                                name: " "
-                            },
-                            {
-                                name: " "
-                            }
-                        ],
-                        parameters:[
-                            {
-                                name: 'Frequency',
-                                value: 20,
-                                options: {
-                                    floor: 0,
-                                    ceil: 100
-                                }
-                            }
-                        ]
-                    }
-                }
-            ],
-        };
+        vm.data = angular.copy(PEDAL_EFFECT_CONSTANT.initListFilter);
+        vm.data.availableOptions.forEach(function(option) {
+           option.node.id = nextNodeID++;
+        });
 
 
         //
@@ -432,46 +203,9 @@
             })[0];
 
 
-            if (!option) {
-                var nodeName = prompt("Enter a node name:", "New node");
+            var newNodeDataModel = angular.copy(option.node);
+            newNodeDataModel.id = nextNodeID++;
 
-                if (!nodeName) {
-                    return;
-                }
-                //
-                // Template for a new node.
-                //
-                var newNodeDataModel = {
-                    name: nodeName,
-                    id: nextNodeID++,
-                    x: 0,
-                    y: 0,
-                    inputConnectors: [
-                        {
-                            name: "X"
-                        },
-                        {
-                            name: "Y"
-                        },
-                        {
-                            name: "Z"
-                        }
-                    ],
-                    outputConnectors: [
-                        {
-                            name: "1"
-                        },
-                        {
-                            name: "2"
-                        },
-                        {
-                            name: "3"
-                        }
-                    ],
-                };
-            } else {
-                var newNodeDataModel = angular.copy(option.node);
-            }
             vm.data.repeatSelect = null;
             vm.chartViewModel.addNode(newNodeDataModel);
         };
@@ -726,7 +460,8 @@
                     break;
                 case 'Chorus':
                     console.log('I am adding Chorus');
-                    return addChorus(source,node.parameters);
+                    //return addChorus(source,node.parameters);
+                    return PedalEffectService.addChorus(source,node.parameters,context);
                     break;
                 default :
                     console.log('Default, do nothing');
@@ -854,22 +589,5 @@
         }
     }
 
-
-    function convertForJson(obj){
-        obj.myself = obj;
-
-        var seen = [];
-
-        var json = JSON.stringify(obj, function(key, val) {
-            if (typeof val == "object") {
-                if (seen.indexOf(val) >= 0)
-                    return
-                seen.push(val)
-            }
-            return val
-        })
-        return json
-
-    }
 
 })();
