@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-    angular.module('app')
+    angular.module('guitareffect.pedalEffect')
         .constant('PEDAL_EFFECT_CONSTANT', {
             initListFilter: {
                 repeatSelect: null,

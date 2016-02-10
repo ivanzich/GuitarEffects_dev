@@ -5,10 +5,8 @@
     angular
         .module('app', [
             'ui.router',
-            'flowChart',
-            'nya.bootstrap.select',
-            'rzModule',
-            'guitareffect.account'
+            'guitareffect.account',
+            'guitareffect.pedalEffect'
         ])
         .config(config)
         .run(run);
