@@ -4,6 +4,7 @@
         'flowChart',
         'nya.bootstrap.select',
         'rzModule',
-        'ngStorage'
+        'ngStorage',
+        'xeditable'
     ]);
 })();

@@ -63,7 +63,7 @@
             });
     }
 
-    function run($http, $rootScope, $window) {
+    function run($http, $rootScope, $window,editableOptions) {
         // add JWT token as default auth header
         $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.jwtToken;
 
@@ -71,6 +71,8 @@
         $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
             $rootScope.activeTab = toState.data.activeTab;
         });
+        editableOptions.theme = 'bs3';
+
     }
 
     // manually bootstrap angular after the JWT token is retrieved from the server

@@ -1,11 +1,14 @@
-<div
+<h1
         mouse-capture
         ng-keydown="vm.keyDown($event)"
         ng-keyup="vm.keyUp($event)">
 
-    <h1>{{vm.chartViewModel.data.title}}</h1>
+    <h2>
+        <a href="#" editable-text="vm.chartViewModel.data.title">{{ vm.chartViewModel.data.title || "empty" }}</a>
+    </h2>
 
     <div class="btn-group">
+
 
         <button
                 class="btn btn-primary"
@@ -110,5 +113,4 @@
         </flow-chart>
     </figure>
 
-
-</div>
+</h1>

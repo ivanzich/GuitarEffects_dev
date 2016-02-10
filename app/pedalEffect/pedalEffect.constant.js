@@ -208,7 +208,7 @@
 
             },
             chartDataModel: {
-                title: "New Project - It is not saved yet",
+                title: "Click to change name project",
                 nodes: [
                     {
                         name: "Input",
