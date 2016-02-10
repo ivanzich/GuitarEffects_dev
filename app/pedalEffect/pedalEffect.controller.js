@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('guitareffect.pedalEffect')
+        .module('guitareffect.pedaleffect')
         .controller('PedalEffectController', Controller);
 
 

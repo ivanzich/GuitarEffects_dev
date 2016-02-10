@@ -6,7 +6,10 @@
         .module('app', [
             'ui.router',
             'guitareffect.account',
-            'guitareffect.pedalEffect'
+            'guitareffect.pedaleffect',
+            'guitareffect.usermanagement',
+            'guitareffect.home',
+            'guitareffect.musicplayer'
         ])
         .config(config)
         .run(run);
@@ -18,8 +21,8 @@
         $stateProvider
             .state('home', {
                 url: '/',
-                templateUrl: 'home/index.html',
-                controller: 'Home.IndexController',
+                templateUrl: 'home/home.html',
+                controller: 'HomeController',
                 controllerAs: 'vm',
                 data: {activeTab: 'home'}
             })
@@ -57,20 +60,6 @@
                 controller: 'MusicPlayerController',
                 controllerAs: 'vm',
                 data: {activeTab: 'musicplayer'}
-            })
-            .state('chat', {
-                url: '/chat',
-                templateUrl: 'chat/chat.html',
-                controller: 'ChatController',
-                controllerAs: 'vm',
-                data: {activeTab: 'chat'}
-            })
-            .state('effect', {
-                url: '/effect',
-                templateUrl: 'effect/effect.html',
-                controller: 'EffectController',
-                controllerAs: 'vm',
-                data: {activeTab: 'effect'}
             });
     }
 

@@ -4,13 +4,10 @@
     <meta charset="utf-8" />
     <title>Guitar Effects</title>
 
-    <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" >-->
     <link rel="stylesheet" href="bower_components/angular-bootstrap-simple-chat/src/css/themes.css">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="bower_components/angular-bootstrap-simple-chat/src/css/style.css">
     <link rel="stylesheet" href="bower_components/angularjs-slider/dist/rzslider.min.css">
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">-->
     <link rel="stylesheet" href="bower_components/nya-bootstrap-select/dist/css/nya-bs-select.css">
 
 
@@ -24,8 +21,8 @@
             <li ng-class="{active: activeTab === 'home'}"><a ui-sref="home">Home</a></li>
             <li ng-class="{active: activeTab === 'account'}"><a ui-sref="account">My Account</a></li>
             <li ng-class="{active: activeTab === 'usermanagement'}"><a ui-sref="usermanagement">User Management</a></li>
-            <li ng-class="{active: activeTab === 'musicplayer'}"><a ui-sref="musicplayer" ui-sref-active="active" >Music Player</a></li>
-            <li ng-class="{active: activeTab === 'pedalEffect'}"><a ui-sref="pedalEffect" ui-sref-active="active">Pedal Effect</a></li>
+            <li ng-class="{active: activeTab === 'musicplayer'}"><a ui-sref="musicplayer" ui-sref-active="active" >Project Management</a></li>
+            <li ng-class="{active: activeTab === 'pedalEffect'}"><a ui-sref="pedalEffect" ui-sref-active="active">Guitar Effect app</a></li>
             <li><a href="/login" target="_self">Logout</a></li>
         </ul>
         <div class="flash-message" ng-if="flash">
@@ -66,11 +63,15 @@
     <script src="pedalEffect/pedalEffect.js"></script>
     <script src="pedalEffect/pedalEffect.service.js"></script>
     <script src="pedalEffect/pedalEffect.constant.js"></script>
-    <script src="home/index.controller.js"></script>
+    <script src="pedalEffect/pedalEffect.controller.js"></script>
+
+    <script src="home/home.js"></script>
+    <script src="home/home.controller.js"></script>
     <script src="account/account.js"></script>
     <script src="account/account.controller.js"></script>
-    <script src="pedalEffect/pedalEffect.controller.js"></script>
+    <script src="userManagement/userManagement.js"></script>
     <script src="userManagement/userManagementController.js"></script>
+    <script src="musicPlayer/musicPlayer.js"></script>
     <script src="musicPlayer/musicPlayerController.js"></script>
 
 

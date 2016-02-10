@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-    angular.module('guitareffect.pedalEffect', [
+    angular.module('guitareffect.pedaleffect', [
         'flowChart',
         'nya.bootstrap.select',
         'rzModule'
