@@ -1,9 +1,11 @@
-<h1 xmlns:partyID="http://www.w3.org/1999/xhtml">Welcome on project management</h1>
+<h1>Welcome on project management</h1>
+<a ng-click="vm.newProject()" ui-sref="pedalEffectDetail({ partyID: project._id  })" class="btn btn-primary" role="button">Nouveau projet</a>
 <div class="row">
 	<div  ng-repeat="project in vm.projectList" class="col-sm-6 col-md-4">
 		<div class="thumbnail">
 			<div class="caption">
 				<h3>{{project.title}}</h3>
+				<p>Author : {{project.author}}</p>
 					<p>
 						<a ui-sref="pedalEffectDetail({ partyID: project._id  })" class="btn btn-primary" role="button">Open</a>
 						<a ng-click="vm.deleteProject(project._id)" class="btn btn-danger" role="button">Delete</a>

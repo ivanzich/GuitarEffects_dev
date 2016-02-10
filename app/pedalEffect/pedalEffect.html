@@ -3,6 +3,9 @@
         ng-keydown="vm.keyDown($event)"
         ng-keyup="vm.keyUp($event)">
 
+    <h2>
+        <a href="#" editable-text="vm.chartViewModel.data.title">{{ vm.chartViewModel.data.title || "empty" }}</a>
+    </h2>
 
     <div class="btn-group">
 
@@ -68,12 +71,6 @@
                 </a>
             </li>
         </ol>
-        <button
-                class="btn btn-primary"
-                ng-click="vm.addNewProjectChartViewModel()"
-                title="Select a project">
-            Select a project
-        </button>
     </div>
 
 
@@ -94,19 +91,7 @@
         </button>
     </div>
 
-
-    <figure class="highlight">
-    <!--
-    This custom element defines the flowchart.
-    -->
-        <flow-chart
-                class="jumbotron"
-                chart="vm.chartViewModel">
-        </flow-chart>
-    </figure>
-
-
-    <h1>{{vm.chartViewModel.getSelectedNodes()[0].data.name}}</h1>
+    <h2>{{vm.chartViewModel.getSelectedNodes()[0].data.name}}</h2>
     <div class="box off"style=" width: 300px; height:auto;"
          ng-hide="vm.chartViewModel.getSelectedNodes().length == 0 &&
           vm.chartViewModel.getSelectedConnections().length == 0" ng-animate="'box'">
@@ -117,5 +102,15 @@
             </div>
         </div>
     </div>
+
+    <figure class="highlight">
+    <!--
+    This custom element defines the flowchart.
+    -->
+        <flow-chart
+                class="jumbotron"
+                chart="vm.chartViewModel">
+        </flow-chart>
+    </figure>
 
 </div>

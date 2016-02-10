@@ -4,14 +4,12 @@
     <meta charset="utf-8" />
     <title>Guitar Effects</title>
 
-    <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" >-->
     <link rel="stylesheet" href="bower_components/angular-bootstrap-simple-chat/src/css/themes.css">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="bower_components/angular-bootstrap-simple-chat/src/css/style.css">
     <link rel="stylesheet" href="bower_components/angularjs-slider/dist/rzslider.min.css">
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">-->
     <link rel="stylesheet" href="bower_components/nya-bootstrap-select/dist/css/nya-bs-select.css">
+    <link href="bower_components/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
 
 
     <link href="app-content/app.css" rel="stylesheet" />
@@ -24,8 +22,8 @@
             <li ng-class="{active: activeTab === 'home'}"><a ui-sref="home">Home</a></li>
             <li ng-class="{active: activeTab === 'account'}"><a ui-sref="account">My Account</a></li>
             <li ng-class="{active: activeTab === 'usermanagement'}"><a ui-sref="usermanagement">User Management</a></li>
-            <li ng-class="{active: activeTab === 'musicplayer'}"><a ui-sref="musicplayer" ui-sref-active="active" >Music Player</a></li>
-            <li ng-class="{active: activeTab === 'pedalEffect'}"><a ui-sref="pedalEffect" ui-sref-active="active">Pedal Effect</a></li>
+            <li ng-class="{active: activeTab === 'musicplayer'}"><a ui-sref="musicplayer" ui-sref-active="active" >Project Management</a></li>
+            <li ng-class="{active: activeTab === 'pedalEffect'}"><a ui-sref="pedalEffect" ui-sref-active="active">Guitar Effect app</a></li>
             <li><a href="/login" target="_self">Logout</a></li>
         </ul>
         <div class="flash-message" ng-if="flash">
@@ -44,12 +42,13 @@
     <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-
+    <script src="bower_components/ngstorage/ngStorage.min.js"></script>
     <script src="bower_components/angular-dragdrop/src/angular-dragdrop.min.js"></script>
     <script src="bower_components/angular-bootstrap-simple-chat/src/scripts/index.js"></script>
     <script src="bower_components/angular-bootstrap-simple-chat/src/scripts/templates.js"></script>
     <script src="bower_components/lodash/dist/lodash.min.js"></script>
     <script src="bower_components/nya-bootstrap-select/dist/js/nya-bs-select.js"></script>
+    <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
 
     <script src="vendor/flowchart/svg_class.js" type="text/javascript"></script>
     <script src="vendor/flowchart/mouse_capture_service.js" type="text/javascript"></script>
@@ -63,11 +62,19 @@
     <script src="app-services/flash.service.js"></script>
     <script src="app-services/socket.service.js"></script>
     <script src="app-services/project.service.js"></script>
-    <script src="home/index.controller.js"></script>
+    <script src="pedalEffect/pedalEffect.js"></script>
+    <script src="pedalEffect/pedalEffect.service.js"></script>
+    <script src="pedalEffect/pedalEffect.constant.js"></script>
+    <script src="pedalEffect/pedalEffect.controller.js"></script>
+
+
+    <script src="home/home.js"></script>
+    <script src="home/home.controller.js"></script>
     <script src="account/account.js"></script>
     <script src="account/account.controller.js"></script>
-    <script src="pedalEffect/pedalEffectController.js"></script>
+    <script src="userManagement/userManagement.js"></script>
     <script src="userManagement/userManagementController.js"></script>
+    <script src="musicPlayer/musicPlayer.js"></script>
     <script src="musicPlayer/musicPlayerController.js"></script>
 
 

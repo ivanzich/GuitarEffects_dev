@@ -2,19 +2,19 @@
     'use strict';
 
     angular
-        .module('app')
+        .module('guitareffect.musicplayer')
         .controller('MusicPlayerController', Controller);
 
 
-    function Controller($window, ProjectService, FlashService) {
+    function Controller(ProjectService, FlashService,  PEDAL_EFFECT_CONSTANT, $localStorage) {
         var vm = this;
 
         vm.projectList = null;
         vm.deleteProject = deleteProject;
+        vm.newProject = newProject;
         initController();
 
         function initController() {
-
 
             ProjectService.GetProjectList()
                 .then(function (projectList) {
@@ -36,8 +36,10 @@
                 });
         }
 
+        function newProject(){
+            $localStorage.data=angular.copy(PEDAL_EFFECT_CONSTANT.chartDataModel);
+        }
     }
-
 
 
 })();

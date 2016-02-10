@@ -2,8 +2,8 @@
     'use strict';
 
     angular
-        .module('app')
-        .controller('Home.IndexController', Controller);
+        .module('guitareffect.home')
+        .controller('HomeController', Controller);
 
     function Controller(UserService) {
         var vm = this;

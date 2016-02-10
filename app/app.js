@@ -5,10 +5,11 @@
     angular
         .module('app', [
             'ui.router',
-            'flowChart',
-            'nya.bootstrap.select',
-            'rzModule',
-            'guitareffect.account'
+            'guitareffect.account',
+            'guitareffect.pedaleffect',
+            'guitareffect.usermanagement',
+            'guitareffect.home',
+            'guitareffect.musicplayer'
         ])
         .config(config)
         .run(run);
@@ -20,8 +21,8 @@
         $stateProvider
             .state('home', {
                 url: '/',
-                templateUrl: 'home/index.html',
-                controller: 'Home.IndexController',
+                templateUrl: 'home/home.html',
+                controller: 'HomeController',
                 controllerAs: 'vm',
                 data: {activeTab: 'home'}
             })
@@ -59,24 +60,10 @@
                 controller: 'MusicPlayerController',
                 controllerAs: 'vm',
                 data: {activeTab: 'musicplayer'}
-            })
-            .state('chat', {
-                url: '/chat',
-                templateUrl: 'chat/chat.html',
-                controller: 'ChatController',
-                controllerAs: 'vm',
-                data: {activeTab: 'chat'}
-            })
-            .state('effect', {
-                url: '/effect',
-                templateUrl: 'effect/effect.html',
-                controller: 'EffectController',
-                controllerAs: 'vm',
-                data: {activeTab: 'effect'}
             });
     }
 
-    function run($http, $rootScope, $window) {
+    function run($http, $rootScope, $window,editableOptions) {
         // add JWT token as default auth header
         $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.jwtToken;
 
@@ -84,6 +71,8 @@
         $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
             $rootScope.activeTab = toState.data.activeTab;
         });
+        editableOptions.theme = 'bs3';
+
     }
 
     // manually bootstrap angular after the JWT token is retrieved from the server
