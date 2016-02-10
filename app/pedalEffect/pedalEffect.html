@@ -3,9 +3,9 @@
         ng-keydown="vm.keyDown($event)"
         ng-keyup="vm.keyUp($event)">
 
+    <h1>{{vm.chartViewModel.data.title}}</h1>
 
     <div class="btn-group">
-
 
         <button
                 class="btn btn-primary"
@@ -68,12 +68,6 @@
                 </a>
             </li>
         </ol>
-        <button
-                class="btn btn-primary"
-                ng-click="vm.addNewProjectChartViewModel()"
-                title="Select a project">
-            Select a project
-        </button>
     </div>
 
 

@@ -6,7 +6,14 @@
         .controller('PedalEffectController', Controller);
 
 
-    function Controller(ProjectService, FlashService,$stateParams,PedalEffectService,PEDAL_EFFECT_CONSTANT) {
+    function Controller(
+        ProjectService,
+        FlashService,
+        $stateParams,
+        PedalEffectService,
+        PEDAL_EFFECT_CONSTANT,
+        $localStorage
+    ) {
 
 
         //
@@ -49,7 +56,6 @@
             soundBuffer,
             url = 'app-content/music/music.mp3';
 
-
         var vm = this;
 
 
@@ -57,6 +63,7 @@
         vm.toggle = true;
         vm.chartViewModel = null;
         vm.projectList = null;
+        vm.data = angular.copy(PEDAL_EFFECT_CONSTANT.initListFilter);
         vm.keyDown = keyDown;
         vm.keyUp = keyUp;
         vm.addNewNode = addNewNode;
@@ -68,7 +75,6 @@
         vm.saveProject = saveProject;
         vm.updateProject = updateProject;
         vm.addNewProjectChartViewModel = addNewProjectChartViewModel;
-
 
 
         initController();
@@ -91,16 +97,17 @@
                         nextNodeID = angular.copy(project.nodes.sort(function (x, y) {
                             return x.id < y.id;
                         })[0].id);
-
                         nextNodeID++;
-                        console.log(nextNodeID);
-                        console.log(vm.chartViewModel);
+                        $localStorage.data= vm.chartViewModel.data;
+
                     })
                     .catch(function (error) {
                         FlashService.Error(error);
                     });
             } else {
-                vm.chartViewModel = new flowchart.ChartViewModel(chartDataModel);
+                //vm.chartViewModel = new flowchart.ChartViewModel(chartDataModel);
+                vm.chartViewModel = new flowchart.ChartViewModel($localStorage.data);
+
             }
 
             if (typeof AudioContext !== "undefined") {
@@ -112,10 +119,6 @@
             }
         }
 
-        vm.data = angular.copy(PEDAL_EFFECT_CONSTANT.initListFilter);
-        vm.data.availableOptions.forEach(function (option) {
-            option.node.id = nextNodeID++;
-        });
 
         function saveProject() {
 
@@ -131,7 +134,6 @@
                 .then(function (project) {
 
                     vm.chartViewModel.data._id = project;
-                    console.log(vm.chartViewModel.data);
                     FlashService.Success('Project created');
 
                 })
@@ -263,7 +265,6 @@
 
             ProjectService.GetById(id)
                 .then(function (project) {
-                    console.log(project);
                     var newModel = {
                         name: project.title,
                         id: nextNodeID++,
@@ -293,12 +294,7 @@
         // Add an input connector to selected nodes.
         //
         function addNewInputConnector() {
-            /*
-             var connectorName = prompt("Enter a connector name:", "New connector");
-             if (!connectorName) {
-             return;
-             }
-             */
+
             var selectedNodes = vm.chartViewModel.getSelectedNodes();
             for (var i = 0; i < selectedNodes.length; ++i) {
                 var node = selectedNodes[i];
@@ -313,12 +309,7 @@
         // Add an output connector to selected nodes.
         //
         function addNewOutputConnector() {
-            /*
-             var connectorName = prompt("Enter a connector name:", "New connector");
-             if (!connectorName) {
-             return;
-             }
-             */
+
 
             var selectedNodes = vm.chartViewModel.getSelectedNodes();
             for (var i = 0; i < selectedNodes.length; ++i) {
@@ -349,10 +340,10 @@
 
             var newNodeDataModel = angular.copy(option.node);
             newNodeDataModel.id = nextNodeID++;
-
             vm.data.repeatSelect = null;
             vm.chartViewModel.addNode(newNodeDataModel);
         };
+
 
     }
 

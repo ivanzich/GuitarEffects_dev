@@ -6,10 +6,11 @@
                 repeatSelect: null,
                 availableOptions: [
                     {
-                        id: '0', name: 'Distortion',
+                        id: '0',
+                        name: 'Distortion',
                         node: {
                             name: 'Distortion',
-                            //id: nextNodeID++,
+                            id: 101,
                             x: 0,
                             y: 0,
                             inputConnectors: [
@@ -45,10 +46,11 @@
                         }
                     },
                     {
-                        id: '5', name: 'Filter',
+                        id: '5',
+                        name: 'Low-pass filter',
                         node: {
-                            name: 'Filter',
-                            //id: nextNodeID++,
+                            name: 'Low-pass filter',
+                            id: 102,
                             x: 0,
                             y: 0,
                             inputConnectors: [
@@ -67,8 +69,8 @@
                                     value: 200,
                                     options: {
                                         floor: 0,
-                                        ceil: 1000000,
-                                        step: 100,
+                                        ceil: 20000,
+                                        step: 10,
                                         precision: 1
                                     }
                                 }
@@ -79,7 +81,7 @@
                         id: '25', name: 'Delay',
                         node: {
                             name: 'Delay',
-                            //id: nextNodeID++,
+                            id: 103,
                             x: 0,
                             y: 0,
                             inputConnectors: [
@@ -109,7 +111,7 @@
                                     value: 400,
                                     options: {
                                         floor: 0,
-                                        ceil: 1000000,
+                                        ceil: 20000,
                                         step: 100,
                                         precision: 1
                                     }
@@ -121,7 +123,7 @@
                         id: '3', name: 'Chorus',
                         node: {
                             name: 'Chorus',
-                            //id: nextNodeID++,
+                            id: 104,
                             x: 0,
                             y: 0,
                             inputConnectors: [
@@ -174,7 +176,7 @@
                         id: '4', name: 'Gain LFO',
                         node: {
                             name: 'Gain LFO',
-                            //id: nextNodeID++,
+                            id: 105,
                             x: 0,
                             y: 0,
                             inputConnectors: [
@@ -206,7 +208,7 @@
 
             },
             chartDataModel: {
-                title: "write your project name",
+                title: "New Project - It is not saved yet",
                 nodes: [
                     {
                         name: "Input",

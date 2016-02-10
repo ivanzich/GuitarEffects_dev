@@ -8,7 +8,7 @@
             addChorus: addChorus,
             addDelay: addDelay,
             addGainLFO:addGainLFO,
-            addFilterNode: addFilterNode,
+            addLowPassFilterNode: addLowPassFilterNode,
             addDistortion: addDistortion,
             getTheSourceNodes: getTheSourceNodes
         };
@@ -89,7 +89,7 @@
         }
 
 
-        function addFilterNode(source, parameters,context) {
+        function addLowPassFilterNode(source, parameters,context) {
             var filterNode = context.createBiquadFilter();
             // Specify this is a lowpass filter
             filterNode.type = 'lowpass';
@@ -178,9 +178,9 @@
                     console.log('I am adding distortion effect');
                     return addDistortion(source, node.parameters,context);
                     break;
-                case 'Filter':
-                    console.log('I am adding Filter');
-                    return addFilterNode(source, node.parameters,context);
+                case 'Low-pass filter':
+                    console.log('I am adding Low pass filter');
+                    return addLowPassFilterNode(source, node.parameters,context);
                     break;
                 case 'Delay':
                     console.log('I am adding Delay');

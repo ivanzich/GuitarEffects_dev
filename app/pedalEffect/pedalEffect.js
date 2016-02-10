@@ -3,6 +3,7 @@
     angular.module('guitareffect.pedaleffect', [
         'flowChart',
         'nya.bootstrap.select',
-        'rzModule'
+        'rzModule',
+        'ngStorage'
     ]);
 })();
