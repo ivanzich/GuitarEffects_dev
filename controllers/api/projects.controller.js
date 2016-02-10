@@ -86,17 +86,9 @@ function updateEffect(req, res) {
 
 function deleteEffect(req, res) {
 
-    /*
-    if (req.params._id !== userId) {
-        // can only delete own account
-        return res.status(401).send('You can only delete your own effect');
-    }*/
-    console.log(req.user.sub);
     userService.getById(req.user.sub)
         .then(function (user) {
             if (user) {
-                console.log(user.role.localeCompare('admin')===0);
-
                 projectService.getById(req.params._id)
                     .then(function(project) {
                         if (project) {
