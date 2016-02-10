@@ -84,18 +84,20 @@ function create(projectParam) {
 function update(_id, projectParam) {
     var deferred = Q.defer();
 
+
     // validation
     projectsDB.findById(_id, function (err, project) {
         if (err) deferred.reject(err);
         projectsDB.findOne(
                 {title: projectParam.title},
-                updateUser());
+                updateProject());
 
     });
 
-    function updateUser() {
+    function updateProject() {
         // fields to update
         var set = {
+            title: projectParam.title,
             nodes: projectParam.nodes,
             connections: projectParam.connections
         };
