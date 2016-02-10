@@ -16,7 +16,7 @@
         service.Update = Update;
         service.Delete = Delete;
         service.GetProjectList = GetProjectList;
-        service.addComment = addComment;
+        service.AddComment = AddComment;
 
         return service;
 
@@ -54,7 +54,7 @@
         }
 
         function AddComment(project){
-            return $http.put('/api/projects/comment', +project._id, project).then(handleSuccess,handleError);
+            return $http.put('/api/projects/comment/' + project._id, project).then(handleSuccess, handleError);
         }
 
         // private functions

@@ -113,14 +113,15 @@ function deleteEffect(req, res) {
 }
 
 function addComment(req, res){
-    console.log(req.params);
+    console.log('Add comment service');
 
-    projectService.comment(req.params._id, req.body)
+    projectService.addComment(req.params._id, req.body)
         .then(function () {
-            log.info(req.body.title +'\'s account has been updated');
+            log.info(req.body.title +'\'s comment has been updated');
             res.sendStatus(200);
         })
         .catch(function (err) {
             res.status(400).send(err);
         });
+
 }

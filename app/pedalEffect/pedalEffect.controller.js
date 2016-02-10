@@ -77,6 +77,7 @@
         vm.saveProject = saveProject;
         vm.updateProject = updateProject;
         vm.addNewProjectChartViewModel = addNewProjectChartViewModel;
+        vm.addComment = addComment;
 
 
 
@@ -222,7 +223,6 @@
         }
 
 
-
         //
         // Event handler for key-down on the flowchart.
         //
@@ -355,15 +355,22 @@
 
 
         function addComment(){
-            if(vm.comment != null){
-                ProjectService.addComment(vm.chartViewModel.data.comment.splice(vm.comment))
+
+            var userComment = {
+                user : vm.user.username,
+                text: vm.comment
+            }
+            vm.chartViewModel.data.comment.splice(0, 0, userComment);
+            console.log('Add comment function');
+
+                ProjectService.AddComment(vm.chartViewModel.data)
                     .then(function () {
                         FlashService.Success('Projet commente');
                     })
                     .catch(function (error) {
                         FlashService.Error(error);
                     });
-            }
+            console.log(vm.chartViewModel.data);
         }
     }
 

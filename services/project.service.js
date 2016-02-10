@@ -15,6 +15,7 @@ service.update = update;
 service.delete = _delete;
 service.getById = getById;
 service.getProjectList = getProjectList;
+service.addComment = addComment;
 
 module.exports = service;
 
@@ -86,7 +87,7 @@ function update(_id, projectParam) {
 
 
     // validation
-    projectsDB.findById(_id, function (err, project) {
+    projectsDB.findById(_id, function (err, projectParam) {
         if (err) deferred.reject(err);
         projectsDB.findOne(
                 {title: projectParam.title},
@@ -130,13 +131,34 @@ function _delete(_id) {
     return deferred.promise;
 }
 
-function comment(_id, comment){
+function addComment(_id, projectParam){
     var deferred = Q.defer();
 
-    projectsDB.findById(_id, function (err, comment) {
-       if(err) deferred.reject(err);
-        projectsDB.findOne(
 
-        )
+    // validation
+    projectsDB.findById(_id, function (err, projectParam) {
+        if (err) deferred.reject(err);
+        projectsDB.findOne(
+            {title: projectParam.title},
+            updateProject());
+
     });
+
+    function updateProject() {
+        // fields to update
+        var set = {
+            comment: projectParam.comment
+        };
+
+        projectsDB.findAndModify(
+            {_id: _id},
+            {$set: set},
+            function (err, doc) {
+                if (err) deferred.reject(err);
+
+                deferred.resolve();
+            });
+    }
+
+    return deferred.promise;
 }

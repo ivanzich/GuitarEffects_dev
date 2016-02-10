@@ -28,7 +28,6 @@
             UserService.GetUserList()
                 .then(function (userList) {
                     vm.userList = userList;
-                    console.log(userList);
                 })
                 .catch(function (error) {
                     FlashService.Error(error);

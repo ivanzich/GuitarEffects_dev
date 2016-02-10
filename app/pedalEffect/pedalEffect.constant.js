@@ -240,7 +240,8 @@
 
                 ],
 
-                connections: []
+                connections: [],
+                comment:[]
             }
         });
 
