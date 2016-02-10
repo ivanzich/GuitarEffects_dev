@@ -9,7 +9,8 @@
             'guitareffect.pedaleffect',
             'guitareffect.usermanagement',
             'guitareffect.home',
-            'guitareffect.musicplayer'
+            'guitareffect.musicplayer',
+            'guitareffect.comment'
         ])
         .config(config)
         .run(run);
@@ -46,6 +47,13 @@
                 controller: 'PedalEffectController',
                 controllerAs: 'vm',
                 data: {activeTab: 'pedalEffect'}
+            })
+            .state('comment', {
+                url: '/comment/:partyID',
+                templateUrl: 'comment/comment.html',
+                controller: 'CommentController',
+                controllerAs: 'vm',
+                data: {activeTab: 'comment'}
             })
             .state('usermanagement', {
                 url: '/usermanagement',

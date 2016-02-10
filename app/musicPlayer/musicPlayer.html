@@ -8,6 +8,7 @@
 				<p>Author : {{project.author}}</p>
 					<p>
 						<a ui-sref="pedalEffectDetail({ partyID: project._id  })" class="btn btn-primary" role="button">Open</a>
+						<a ui-sref="comment({ partyID: project._id  })" class="btn btn-primary" role="button">Show comments</a>
 						<a ng-click="vm.deleteProject(project._id)" class="btn btn-danger" role="button">Delete</a>
 					</p>
 			</div>
