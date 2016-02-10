@@ -16,7 +16,6 @@
 
         function initController() {
 
-
             ProjectService.GetProjectList()
                 .then(function (projectList) {
                     vm.projectList = projectList;

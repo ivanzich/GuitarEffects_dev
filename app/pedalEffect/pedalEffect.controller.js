@@ -9,6 +9,7 @@
     function Controller(
         ProjectService,
         FlashService,
+        UserService,
         $stateParams,
         PedalEffectService,
         PEDAL_EFFECT_CONSTANT,
@@ -50,7 +51,6 @@
         //
         // Setup the data-model for the chart.
         //
-        var chartDataModel = angular.copy(PEDAL_EFFECT_CONSTANT.chartDataModel);
         var context,
             soundSource,
             soundBuffer,
@@ -60,6 +60,7 @@
 
 
         vm.selectedModel = null;
+        vm.user = null;
         vm.toggle = true;
         vm.chartViewModel = null;
         vm.projectList = null;
@@ -77,11 +78,21 @@
         vm.addNewProjectChartViewModel = addNewProjectChartViewModel;
 
 
+
         initController();
-        // Step 1 - Initialise the Audio Context
-        // There can be only one!
         function initController() {
 
+            initSelectProjectModel();
+
+            initChartViewModel();
+            UserService.GetCurrent().then(function (user) {
+                vm.user = user;
+            });
+
+        }
+
+
+        function initSelectProjectModel(){
             ProjectService.GetProjectList()
                 .then(function (projectList) {
                     vm.projectList = projectList;
@@ -89,7 +100,9 @@
                 .catch(function (error) {
                     FlashService.Error(error);
                 });
+        }
 
+        function initChartViewModel(){
             if ($stateParams.partyID) {
                 ProjectService.GetById($stateParams.partyID)
                     .then(function (project) {
@@ -109,7 +122,9 @@
                 vm.chartViewModel = new flowchart.ChartViewModel($localStorage.data);
 
             }
+        }
 
+        function initAudioContext(){
             if (typeof AudioContext !== "undefined") {
                 context = new AudioContext();
             } else if (typeof webkitAudioContext !== "undefined") {
@@ -119,14 +134,10 @@
             }
         }
 
-
         function saveProject() {
 
-            var projectName = prompt("Enter a project name:", "Title");
-            if (!projectName) {
-                return;
-            }
-            vm.chartViewModel.data.title = projectName;
+            vm.chartViewModel.data.author = vm.user.username;
+            vm.chartViewModel.data.authorId = vm.user._id;
             delete(vm.chartViewModel.data._id);
 
 
@@ -161,6 +172,7 @@
 
         // Step 2: Load our Sound using XHR
         function startSound() {
+            initAudioContext();
             // Note: this loads asynchronously
             var request = new XMLHttpRequest();
             request.open("GET", url, true);
@@ -309,7 +321,6 @@
         // Add an output connector to selected nodes.
         //
         function addNewOutputConnector() {
-
 
             var selectedNodes = vm.chartViewModel.getSelectedNodes();
             for (var i = 0; i < selectedNodes.length; ++i) {
