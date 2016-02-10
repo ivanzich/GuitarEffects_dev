@@ -129,3 +129,14 @@ function _delete(_id) {
 
     return deferred.promise;
 }
+
+function comment(_id, comment){
+    var deferred = Q.defer();
+
+    projectsDB.findById(_id, function (err, comment) {
+       if(err) deferred.reject(err);
+        projectsDB.findOne(
+
+        )
+    });
+}

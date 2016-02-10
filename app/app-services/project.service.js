@@ -16,6 +16,7 @@
         service.Update = Update;
         service.Delete = Delete;
         service.GetProjectList = GetProjectList;
+        service.addComment = addComment;
 
         return service;
 
@@ -50,6 +51,10 @@
 
         function Delete(_id) {
             return $http.delete('/api/projects/' + _id).then(handleSuccess, handleError);
+        }
+
+        function AddComment(project){
+            return $http.put('/api/projects/comment', +project._id, project).then(handleSuccess,handleError);
         }
 
         // private functions

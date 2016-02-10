@@ -64,6 +64,7 @@
         vm.toggle = true;
         vm.chartViewModel = null;
         vm.projectList = null;
+        vm.comment = null;
         vm.data = angular.copy(PEDAL_EFFECT_CONSTANT.initListFilter);
         vm.keyDown = keyDown;
         vm.keyUp = keyUp;
@@ -76,6 +77,7 @@
         vm.saveProject = saveProject;
         vm.updateProject = updateProject;
         vm.addNewProjectChartViewModel = addNewProjectChartViewModel;
+
 
 
 
@@ -164,10 +166,6 @@
                     FlashService.Error(error);
                 });
         }
-
-
-
-
 
 
         // Step 2: Load our Sound using XHR
@@ -267,7 +265,7 @@
                 evt.stopPropagation();
                 evt.preventDefault();
             }
-        };
+        }
 
 
 
@@ -293,7 +291,7 @@
                             }
                         ],
                         dataProject: project
-                    }
+                    };
                     vm.chartViewModel.addNode(newModel);
                 })
                 .catch(function (error) {
@@ -312,10 +310,10 @@
                 var node = selectedNodes[i];
                 node.addInputConnector({
                     //name: connectorName,
-                    name: ' ',
+                    name: ' '
                 });
             }
-        };
+        }
 
         //
         // Add an output connector to selected nodes.
@@ -327,10 +325,10 @@
                 var node = selectedNodes[i];
                 node.addOutputConnector({
                     //name: connectorName,
-                    name: ' ',
+                    name: ' '
                 });
             }
-        };
+        }
 
         //
         // Delete selected nodes and connections.
@@ -338,7 +336,7 @@
         function deleteSelected() {
 
             vm.chartViewModel.deleteSelected();
-        };
+        }
 
         //
         // Add a new node to the chart.
@@ -353,9 +351,20 @@
             newNodeDataModel.id = nextNodeID++;
             vm.data.repeatSelect = null;
             vm.chartViewModel.addNode(newNodeDataModel);
-        };
+        }
 
 
+        function addComment(){
+            if(vm.comment != null){
+                ProjectService.addComment(vm.chartViewModel.data.comment.splice(vm.comment))
+                    .then(function () {
+                        FlashService.Success('Projet commente');
+                    })
+                    .catch(function (error) {
+                        FlashService.Error(error);
+                    });
+            }
+        }
     }
 
 })();

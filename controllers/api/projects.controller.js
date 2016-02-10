@@ -15,6 +15,7 @@ router.get('/list', getListProjects);
 router.get('/:id', getProject);
 router.put('/:_id', updateEffect);
 router.delete('/:_id', deleteEffect);
+router.put('/comment/:_id', addComment);
 
 module.exports = router;
 
@@ -117,4 +118,17 @@ function deleteEffect(req, res) {
         res.status(400).send(err);
     });
 
+}
+
+function addComment(req, res){
+    console.log(req.params);
+
+    projectService.comment(req.params._id, req.body)
+        .then(function () {
+            log.info(req.body.title +'\'s account has been updated');
+            res.sendStatus(200);
+        })
+        .catch(function (err) {
+            res.status(400).send(err);
+        });
 }
