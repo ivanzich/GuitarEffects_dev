@@ -78,6 +78,38 @@
                         }
                     },
                     {
+                        id: '6',
+                        name: 'High-pass filter',
+                        node: {
+                            name: 'High-pass filter',
+                            id: 108,
+                            x: 0,
+                            y: 0,
+                            inputConnectors: [
+                                {
+                                    name: " "
+                                }
+                            ],
+                            outputConnectors: [
+                                {
+                                    name: " "
+                                }
+                            ],
+                            parameters: [
+                                {
+                                    name: 'Frequency',
+                                    value: 800,
+                                    options: {
+                                        floor: 0,
+                                        ceil: 20000,
+                                        step: 10,
+                                        precision: 1
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
                         id: '25', name: 'Delay',
                         node: {
                             name: 'Delay',
@@ -208,7 +240,7 @@
                         name: 'Volume/Gain',
                         node: {
                             name: 'Volume/Gain',
-                            id: 101,
+                            id: 150,
                             x: 0,
                             y: 0,
                             inputConnectors: [
@@ -229,6 +261,99 @@
                                         floor: 0,
                                         ceil: 1,
                                         step: 0.1,
+                                        precision: 1
+                                    }
+                                }
+                            ]
+                        }
+                    },{
+                        id: '15',
+                        name: 'Low-shelf filter',
+                        node: {
+                            name: 'Low-shelf filter',
+                            id: 102,
+                            x: 0,
+                            y: 0,
+                            inputConnectors: [
+                                {
+                                    name: " "
+                                }
+                            ],
+                            outputConnectors: [
+                                {
+                                    name: " "
+                                }
+                            ],
+                            parameters: [
+                                {
+                                    name: 'Frequency',
+                                    value: 1000,
+                                    options: {
+                                        floor: 0,
+                                        ceil: 20000,
+                                        step: 10,
+                                        precision: 1
+                                    }
+                                },
+                                {
+                                    name: 'Gain',
+                                    value: 25,
+                                    options: {
+                                        floor: 0,
+                                        ceil: 100,
+                                        step: 1,
+                                        precision: 1
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        id: '16',
+                        name: 'Peaking filter',
+                        node: {
+                            name: 'Peaking filter',
+                            id: 104,
+                            x: 0,
+                            y: 0,
+                            inputConnectors: [
+                                {
+                                    name: " "
+                                }
+                            ],
+                            outputConnectors: [
+                                {
+                                    name: " "
+                                }
+                            ],
+                            parameters: [
+                                {
+                                    name: 'Frequency',
+                                    value: 1000,
+                                    options: {
+                                        floor: 0,
+                                        ceil: 20000,
+                                        step: 10,
+                                        precision: 1
+                                    }
+                                },
+                                {
+                                    name: 'Q',
+                                    value: 100,
+                                    options: {
+                                        floor: 0,
+                                        ceil: 100,
+                                        step: 1,
+                                        precision: 1
+                                    }
+                                },
+                                {
+                                    name: 'Gain',
+                                    value: 25,
+                                    options: {
+                                        floor: 0,
+                                        ceil: 100,
+                                        step: 1,
                                         precision: 1
                                     }
                                 }

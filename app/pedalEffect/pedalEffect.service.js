@@ -99,6 +99,14 @@
             return filterNode;
 
         };
+        function addHighPassFilterNode(source, parameters,context) {
+            var filterNode = context.createBiquadFilter();
+            filterNode.type = 'highpass';
+            filterNode.frequency.value = parameters[0].value;
+            source.connect(filterNode);
+            return filterNode;
+
+        };
 
         function addDistortion(source, parameters,context) {
             var distortion = context.createWaveShaper();
@@ -124,6 +132,26 @@
             return curve;
         }
 
+        function addLowShelfFilter(source,parameter,context){
+            var biquadFilter = context.createBiquadFilter();
+            biquadFilter.type = "lowshelf";
+            biquadFilter.frequency.value = parameter[0].value;
+            biquadFilter.gain.value = parameter[1].value;
+
+            source.connect(biquadFilter);
+            return biquadFilter;
+        }
+
+        function addPeakingFilter(source,parameter,context){
+            var biquadFilter = context.createBiquadFilter();
+            biquadFilter.type = "peaking";
+            biquadFilter.frequency.value = parameter[0].value;
+            biquadFilter.Q.value = parameter[1].value;
+            biquadFilter.gain.value = parameter[2].value;
+            source.connect(biquadFilter);
+            return biquadFilter;
+
+        }
 
 
         function getTheDestNodes(destNode, source, model,context) {
@@ -200,6 +228,16 @@
                 case 'Chorus':
                     console.log('I am adding Chorus');
                     return addChorus(source, node.parameters, context);
+                case 'Low-shelf filter':
+                    console.log('I am adding Low-shelf filter');
+                    return addLowShelfFilter(source, node.parameters, context);
+                case 'Peaking filter':
+                    console.log('I am adding Peaking filter');
+                    return addPeakingFilter(source, node.parameters, context);
+                case 'High-pass filter':
+                    console.log('I am adding High-pass filter');
+                    return addHighPassFilterNode(source, node.parameters, context);
+
                 default :
                     return getTheSourceNodesProject(0, source, node.dataProject,context);
             }
