@@ -52,6 +52,7 @@
         // Setup the data-model for the chart.
         //
         var context,
+            mic,
             soundSource,
             soundBuffer,
             url = 'app-content/music/music.mp3';
@@ -78,6 +79,8 @@
         vm.updateProject = updateProject;
         vm.addNewProjectChartViewModel = addNewProjectChartViewModel;
         vm.addComment = addComment;
+        vm.activateMicro = activateMicro;
+        vm.deactivateMicro = deactivateMicro;
 
 
 
@@ -208,7 +211,7 @@
                 soundSource.buffer = soundBuffer;
 
                 var volumeNode = context.createGain();
-                volumeNode.gain.value = 0.5;
+                volumeNode.gain.value = 0.1;
 
                 // Wiring
                 soundSource.connect(volumeNode);
@@ -371,6 +374,26 @@
                         FlashService.Error(error);
                     });
             console.log(vm.chartViewModel.data);
+        }
+        //Fonction pour activer le micro
+        function activateMicro() {
+            initAudioContext();
+            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia
+                ||  navigator.mozGetUserMedia ||  navigator.msGetUserMedia;
+            navigator.getUserMedia ({ audio: true },
+                function (stream) {
+                    mic = context.createMediaStreamSource(stream);
+
+                    PedalEffectService.getTheSourceNodes(0, mic, vm.chartViewModel,context).connect(context.destination);
+                },
+                function (e) {
+                    // error
+                    console.error(e)});
+
+        };
+
+        function deactivateMicro(){
+            mic.stop(context.currentTime);
         }
     }
 

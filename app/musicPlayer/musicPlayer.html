@@ -1,5 +1,6 @@
 <h1>Welcome on project management</h1>
-<a ng-click="vm.newProject()" ui-sref="pedalEffectDetail({ partyID: project._id  })" class="btn btn-primary" role="button">Nouveau projet</a>
+<a  style="margin-bottom: 1em"
+		ng-click="vm.newProject()" ui-sref="pedalEffectDetail({ partyID: project._id  })" class="btn btn-primary" role="button">Nouveau projet</a>
 <div class="row">
 	<div  ng-repeat="project in vm.projectList" class="col-sm-6 col-md-4">
 		<div class="thumbnail">
