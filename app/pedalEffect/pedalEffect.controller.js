@@ -375,6 +375,7 @@
                     });
             console.log(vm.chartViewModel.data);
         }
+
         //Fonction pour activer le micro
         function activateMicro() {
             initAudioContext();
@@ -383,7 +384,6 @@
             navigator.getUserMedia ({ audio: true },
                 function (stream) {
                     mic = context.createMediaStreamSource(stream);
-
                     PedalEffectService.getTheSourceNodes(0, mic, vm.chartViewModel,context).connect(context.destination);
                 },
                 function (e) {
@@ -393,7 +393,7 @@
         };
 
         function deactivateMicro(){
-            mic.stop(context.currentTime);
+            mic.disconnect();
         }
     }
 
