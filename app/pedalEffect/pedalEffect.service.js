@@ -172,29 +172,34 @@
             });
         }
 
+
+        function addVolumeGain(source, parameters,context){
+            var volumeNode = context.createGain();
+            volumeNode.gain.value = parameters[0].value;
+            source.connect(volumeNode);
+            return volumeNode;
+        }
+
         function addEffect(node, source,context) {
             switch (node.name) {
                 case 'Distortion':
                     console.log('I am adding distortion effect');
                     return addDistortion(source, node.parameters,context);
-                    break;
                 case 'Low-pass filter':
                     console.log('I am adding Low pass filter');
                     return addLowPassFilterNode(source, node.parameters,context);
-                    break;
                 case 'Delay':
                     console.log('I am adding Delay');
                     return addDelay(source, node.parameters,context);
-                    break;
                 case 'Gain LFO':
                     console.log('I am adding Gain LFO');
                     return addGainLFO(source, node.parameters,context);
-                    break;
+                case 'Volume/Gain':
+                    console.log('I am adding Volume/Gain');
+                    return addVolumeGain(source, node.parameters,context);
                 case 'Chorus':
                     console.log('I am adding Chorus');
-                    //return addChorus(source,node.parameters);
                     return addChorus(source, node.parameters, context);
-                    break;
                 default :
                     return getTheSourceNodesProject(0, source, node.dataProject,context);
             }

@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-npm install mocha
+sudo npm install mocha -g
 mocha test/serverTest.js
 

@@ -203,6 +203,37 @@
                                 }
                             ]
                         }
+                    },  {
+                        id: '8',
+                        name: 'Volume/Gain',
+                        node: {
+                            name: 'Volume/Gain',
+                            id: 101,
+                            x: 0,
+                            y: 0,
+                            inputConnectors: [
+                                {
+                                    name: " "
+                                }
+                            ],
+                            outputConnectors: [
+                                {
+                                    name: " "
+                                }
+                            ],
+                            parameters: [
+                                {
+                                    name: 'Value',
+                                    value: 0.1,
+                                    options: {
+                                        floor: 0,
+                                        ceil: 1,
+                                        step: 0.1,
+                                        precision: 1
+                                    }
+                                }
+                            ]
+                        }
                     }
                 ]
 

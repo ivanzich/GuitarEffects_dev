@@ -210,13 +210,8 @@
                 // Add the buffered data to our object
                 soundSource.buffer = soundBuffer;
 
-                var volumeNode = context.createGain();
-                volumeNode.gain.value = 0.1;
-
-                // Wiring
-                soundSource.connect(volumeNode);
                 //volumeNode.connect(distortion);
-                PedalEffectService.getTheSourceNodes(0, volumeNode, vm.chartViewModel,context).connect(context.destination);
+                PedalEffectService.getTheSourceNodes(0, soundSource, vm.chartViewModel,context).connect(context.destination);
 
 
                 // Finally
